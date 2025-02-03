@@ -1,0 +1,210 @@
+{
+    "HomePage": {
+      "title":"مرحبا بالعالم!" 
+    },
+    "LocaleSwitcher": {
+        "ar": "عربي",
+        "en": "انجليزي",
+        "label": "اللغة"
+    },
+    "Expenses": {
+      "title": "المصروفات",
+      "addExpense": "إضافة مصروف",
+      "loading": "جارٍ تحميل المصروفات...",
+      "trackExpenses": "تتبع المصروفات المنفقة",
+      "records": "سجلات المصروفات",
+      "noExpenses": "لم يتم العثور على مصروفات لهذه الفترة",
+      "error": "حدث خطأ"
+  },
+    "Dashboard": {
+      "title": "لوحة القيادة",
+      "welcome": "مرحبًا بعودتك!",
+      "statsOverview": "نظرة عامة على الإحصائيات لهذا الشهر",
+      "numberOfBookings": "عدد الحجوزات",
+      "totalExpenses": "إجمالي المصروفات",
+      "totalRevenue": "إجمالي الإيرادات",
+      "totalProfit": "إجمالي الربح",
+      "booking": "الحجز"
+  },
+  "Booking":
+  {
+    "booking": "الحجوزات",
+    "addReservation": "إضافة حجز",
+    "trackRecords": "تتبع السجلات بسهولة",
+    "bookingRecords": "سجلات الحجز",
+    "loadingBookings": "جارٍ تحميل الحجوزات...",
+    "error": "خطأ"
+  },
+  "Analytics":
+  {
+    "financialAnalytics": "تحليلات مالية",
+    "financialOverview": "نظرة عامة على الأداء المالي",
+    "revenue": "الإيرادات",
+    "expenses": "المصروفات",
+    "profit": "الربح",
+    "bookingMethodsDistribution": "توزيع طرق الحجز",
+    "numberOfBookings": "عدد الحجوزات",
+    "totalExpenses": "إجمالي المصروفات",
+    "totalRevenue": "إجمالي الإيرادات",
+    "totalProfit": "إجمالي الربح"
+
+  },
+  
+  "BookingItems":{
+    "customer": "العميل",
+    "entryDate": "تاريخ الدخول",
+    "exitDate": "تاريخ الخروج",
+    "dailyAmount": "المبلغ اليومي",
+    "days": "الأيام",
+    "totalAmount": "المبلغ الإجمالي",
+    "actions": "الإجراءات"
+  },
+  "Sidebar":{
+
+    "dashboard": "لوحة التحكم",
+    "booking": "الحجوزات",
+    "expenses": "المصاريف",
+    "analytics": "تحليلات",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
+  },
+
+  "RightSidebar": {
+    "user": "المستخدم",
+    "admin": "المسؤول",
+    "hello": "مرحبًا",
+    "adminControl": "لديك سيطرة كاملة",
+    "userExperience": "نتمنى لك تجربة ممتعة",
+    "reminders": "التذكيرات",
+    "viewAll": "عرض الكل",
+    "bookingNotifications": "إشعارات الحجز",
+    "featureComing": "سيتم استكمال هذه الميزة في الإصدار الثاني"
+  },
+  "Login": {
+    "title": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟",
+    "signUp": "اشترك",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "كلمة المرور",
+    "passwordPlaceholder": "كلمة المرور الخاصة بك",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "signIn": "تسجيل الدخول",
+    "signingIn": "جارٍ تسجيل الدخول..."
+  },
+  "Signup": {
+    "title": "إنشاء حساب",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "signIn": "تسجيل الدخول",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "كلمة المرور",
+    "passwordPlaceholder": "كلمة المرور الخاصة بك",
+    "signUp": "إنشاء حساب",
+    "signingUp": "جاري إنشاء الحساب..."
+  },
+  
+    "HeroSection": {
+      "nav": {
+        "properties": "العقارات",
+        "expenses": "تتبع المصروفات",
+        "bookings": "حجوزاتي",
+        "support": "الدعم"
+      },
+      "menu": {
+        "open": "فتح القائمة الرئيسية",
+        "close": "إغلاق القائمة"
+      },
+      "auth": {
+        "login": "تسجيل الدخول"
+      },
+      "feature": {
+        "text": "ميزة جديدة! تتبع مصروفات إيجارك بسهولة.",
+        "link": "جربها الآن"
+      },
+      "title": "منزلك بعيدًا عن المنزل",
+      "description": "احجز إقامتك المثالية وتتبع مصروفاتك في مكان واحد. استمتع بإدارة عقارية سلسة وتخطيط سفر مع MY BnB.",
+      "cta": {
+        "browse": "تصفح العقارات",
+        "learn": "تعلم المزيد"
+      }
+    },
+    "BookingForm": {
+    "title": "حجز جديد",
+    "customerName": "اسم العميل",
+    "customerNamePlaceholder": "أدخل اسم العميل",
+    "property": "العقار",
+    "propertyPlaceholder": "اختر العقار",
+    "entryDate": "تاريخ الدخول",
+    "exitDate": "تاريخ الخروج",
+    "bookingMethod": "طريقة الحجز",
+    "bookingMethodPlaceholder": "اختر طريقة الحجز",
+    "receiptImage": "صورة الإيصال",
+    "bookingSummary": "ملخص الحجز",
+    "numberOfDays": "عدد الأيام",
+    "dailyAmount": "المبلغ اليومي",
+    "totalAmount": "المبلغ الإجمالي",
+    "cancel": "إلغاء",
+    "createBooking": "إنشاء حجز"
+  },
+  "ExpenseForm": {
+    "title": "إدخال مصروف جديد",
+    "expenseField": "مجال المصروف",
+    "selectField": "اختر المجال",
+    "fields": {
+      "Travel": "السفر",
+      "Office Supplies": "لوازم المكتب",
+      "Equipment": "المعدات",
+      "Software": "البرمجيات",
+      "Utilities": "المرافق",
+      "Others": "أخرى"
+    },
+    "amount": "المبلغ",
+    "enterAmount": "أدخل المبلغ",
+    "date": "التاريخ",
+    "receiptImage": "صورة الإيصال",
+    "description": "الوصف",
+    "enterDescription": "أدخل وصف المصروف",
+    "cancel": "إلغاء",
+    "submitExpense": "إرسال المصروف"
+  },
+  "ExpensesItem": {
+    "currency": "ر.س ",
+    "editExpense": "تعديل المصروف",
+    "field": "المجال",
+    "description": "الوصف", 
+    "date": "التاريخ",
+    "amount": "المبلغ",
+    "update": "تحديث",
+    "confirmDelete": "هل أنت متأكد؟",
+    "deleteWarning": "لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف المصروف بشكل دائم.",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "receipt": "إيصال"
+  },
+  "BookingItem": {
+    "currency": "ر.س ",
+    "entry": "الدخول",
+    "exit": "الخروج", 
+    "daily": "يومي",
+    "days": "أيام",
+    "total": "المجموع",
+    "editBooking": "تعديل الحجز",
+    "customerName": "اسم العميل",
+    "entryDate": "تاريخ الدخول",
+    "exitDate": "تاريخ الخروج", 
+    "dailyAmount": "المبلغ اليومي",
+    "bookingMethod": "طريقة الحجز",
+    "update": "تحديث",
+    "confirmDelete": "هل أنت متأكد؟",
+    "deleteWarning": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف الحجز نهائيًا.",
+    "cancel": "إلغاء", 
+    "delete": "حذف"
+  }
+  
+
+  
+
+  
+
+} 

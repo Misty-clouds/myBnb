@@ -1,0 +1,215 @@
+{
+    "HomePage": {
+      "title": "Hello world!"
+    },
+    "LocaleSwitcher": {
+        "ar": "Arabic",
+        "en": "English",
+        "label": "Language"
+    },    
+      "Expenses": {
+          "title": "Expenses",
+          "addExpense": "Add Expense",
+          "loading": "Loading expenses...",
+          "trackExpenses": "Keep track of expenses spent",
+          "records": "Expenses Records",
+          "noExpenses": "No expenses found for this period",
+          "error": "An error occurred"
+      },
+  
+      "Dashboard": {
+        "title": "Dashboard",
+        "welcome": "Welcome back!",
+        "statsOverview": "Stats Overview for the month",
+        "numberOfBookings": "Number of Bookings",
+        "totalExpenses": "Total Expenses",
+        "totalRevenue": "Total Revenue",
+        "totalProfit": "Total Profit",
+        "booking": "Booking"
+    },
+    "Booking":
+    {
+      "booking": "Booking",
+      "addReservation": "Add a Reservation",
+      "trackRecords": "Keep track of records with ease",
+      "bookingRecords": "Booking Records",
+      "loadingBookings": "Loading bookings...",
+      "error": "Error"
+    },
+    "Analytics":
+    {
+      "financialAnalytics": "Financial Analytics",
+      "financialOverview": "Financial Overview",
+      "revenue": "Revenue",
+      "expenses": "Expenses",
+      "profit": "Profit",
+      "bookingMethodsDistribution": "Booking Methods Distribution",
+      "numberOfBookings": "Number of Bookings",
+      "totalExpenses": "Total Expenses",
+      "totalRevenue": "Total Revenue",
+      "totalProfit": " Total Profit"
+    },
+    "BookingItems":{
+      "customer": "Customer",
+      "entryDate": "Entry Date",
+      "exitDate": "Exit Date",
+      "dailyAmount": "Daily Amount",
+      "days": "Days",
+      "totalAmount": "Total Amount",
+      "actions": "Actions"
+    },
+    "Sidebar":{
+      "dashboard": "Dashboard",
+      "booking": "Booking",
+      "expenses": "Expenses",
+      "analytics": "Analytics",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "RightSidebar": {
+    "user": "User",
+    "admin": "Admin",
+    "hello": "Hello",
+    "adminControl": "You have full control",
+    "userExperience": "Have a nice experience",
+    "reminders": "Reminders",
+    "viewAll": "View all",
+    "bookingNotifications": "Booking Notifications",
+    "featureComing": "This feature is to be completed in v2"
+  }, 
+  "Login": {
+    "title": "Sign in",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Your password",
+    "forgotPassword": "Forgot Password?",
+    "signIn": "Sign in",
+    "signingIn": "Signing In..."
+  },  
+
+    "Signup": {
+      "title": "Sign up",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Your password",
+      "signUp": "Sign up",
+      "signingUp": "Signing up..."
+    },
+      "HeroSection": {
+        "nav": {
+          "properties": "Properties",
+          "expenses": "Expense Tracker",
+          "bookings": "My Bookings",
+          "support": "Support"
+        },
+        "menu": {
+          "open": "Open main menu",
+          "close": "Close menu"
+        },
+        "auth": {
+          "login": "Log in"
+        },
+        "feature": {
+          "text": "New feature! Track your rental expenses easily.",
+          "link": "Try it now"
+        },
+        "title": "Your Home Away From Home",
+        "description": "Book your perfect stay and keep track of your expenses all in one place. Experience seamless property management and travel planning with MY BnB.",
+        "cta": {
+          "browse": "Browse Properties",
+          "learn": "Learn more"
+        }
+      },
+      "BookingForm": {
+    "title": "New Booking Reservation",
+    "customerName": "Customer Name",
+    "customerNamePlaceholder": "Enter customer name",
+    "property": "Property",
+    "propertyPlaceholder": "Select property",
+    "entryDate": "Entry Date",
+    "exitDate": "Exit Date",
+    "bookingMethod": "Booking Method",
+    "bookingMethodPlaceholder": "Select booking method",
+    "receiptImage": "Receipt Image",
+    "bookingSummary": "Booking Summary",
+    "numberOfDays": "Number of Days",
+    "dailyAmount": "Daily Amount",
+    "totalAmount": "Total Amount",
+    "cancel": "Cancel",
+    "createBooking": "Create Booking"
+  },
+
+  "ExpenseForm": {
+    "title": "New Expense Entry",
+    "expenseField": "Expense Field",
+    "selectField": "Select field",
+    "fields": {
+      "Travel": "Travel",
+      "Office Supplies": "Office Supplies",
+      "Equipment": "Equipment",
+      "Software": "Software",
+      "Utilities": "Utilities",
+      "Others": "Others"
+    },
+    "amount": "Amount",
+    "enterAmount": "Enter amount",
+    "date": "Date",
+    "receiptImage": "Receipt Image",
+    "description": "Description",
+    "enterDescription": "Enter expense description",
+    "cancel": "Cancel",
+    "submitExpense": "Submit Expense"
+  },
+  "ExpensesItem": {
+    "currency": "SAR ",
+    "editExpense": "Edit Expense",
+    "field": "Field",
+    "description": "Description", 
+    "date": "Date",
+    "amount": "Amount",
+    "update": "Update",
+    "confirmDelete": "Are you sure?",
+    "deleteWarning": "This action cannot be undone. This will permanently delete the expense.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "receipt": "Receipt"
+  },
+  "BookingItem": {
+    "currency": "SAR ",
+    "entry": "Entry",
+    "exit": "Exit", 
+    "daily": "Daily",
+    "days": "Days",
+    "total": "Total",
+    "editBooking": "Edit Booking",
+    "customerName": "Customer Name",
+    "entryDate": "Entry Date",
+    "exitDate": "Exit Date", 
+    "dailyAmount": "Daily Amount",
+    "bookingMethod": "Booking Method",
+    "update": "Update",
+    "confirmDelete": "Are you sure?",
+    "deleteWarning": "This action cannot be undone. This will permanently delete the booking.",
+    "cancel": "Cancel", 
+    "delete": "Delete"
+  }
+    
+  
+
+    
+    
+    
+    
+
+    
+    
+  
+  
+
+} 

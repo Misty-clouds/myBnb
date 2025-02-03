@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode Variables */
+    --primary: #322A7D;
+    --accent: #FFA101;
+    --accent-hover: #FFA101;
+    --primary-text: #11141A;
+    --secondary-text: #354052;
+    --muted-gray: #7F8FA4;
+    --inactive-gray: #BBC5D5;
+    --background: #F7F8FA;
+    --light-gray: #D3D3D3;
+    --secondary-bg: #FFFFFF;
+  }
+
+  .dark {
+    /* Dark Mode Variables */
+    --primary: #1A1F2E;
+    --accent: #FFA101;
+    --primary-text: #E0E7F0;
+    --secondary-text: #A0A8B3;
+    --muted-gray: #4A5568;
+    --inactive-gray: #2C3444;
+    --background: #0A0E14;
+    --light-gray: #1E2433;
+    --secondary-bg: #121621;
+  }
+
+  body {
+    @apply bg-background text-primary-text;
+  }
+}
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.2s ease-out forwards;
+}
