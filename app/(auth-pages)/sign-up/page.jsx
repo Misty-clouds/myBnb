@@ -1,48 +1,83 @@
+import React from 'react';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+} from "@/components/ui/card";
+import { Mail } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { signUpAction } from "@/app/actions";
 import { FormMessage } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 export default async function Signup({ searchParams, params }) {
   const t = await getTranslations(params.locale);
   const searchParamsResolved = await searchParams;
 
-  if ("message" in searchParamsResolved) {
-    return (
-      <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
-        <FormMessage message={searchParamsResolved} />
-      </div>
-    );
-  }
-
   return (
-    <form className="flex flex-col min-w-64 max-w-64 mx-auto">
-      <h1 className="text-2xl font-medium">{t("Signup.title")}</h1>
-      <p className="text-sm text text-foreground">
-        {t("Signup.alreadyHaveAccount")}{" "}
-        <Link className="text-primary font-medium underline" href="/sign-in">
-          {t("Signup.signIn")}
-        </Link>
-      </p>
-      <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-        <Label htmlFor="email">{t("Signup.emailLabel")}</Label>
-        <Input name="email" placeholder={t("Signup.emailPlaceholder")} required />
-        <Label htmlFor="password">{t("Signup.passwordLabel")}</Label>
-        <Input
-          type="password"
-          name="password"
-          placeholder={t("Signup.passwordPlaceholder")}
-          minLength={6}
-          required
-        />
-        <SubmitButton formAction={signUpAction} pendingText={t("Signup.signingUp")}>
-          {t("Signup.signUp")}
-        </SubmitButton>
-        <FormMessage message={searchParamsResolved} />
+    <section className="container py-24 sm:py-32">
+      <div className="max-w-md mx-auto">
+        <div className="mb-8">
+          <h2 className="text-4xl  font-bold mb-2">{t("Signup.title")}</h2>
+          <p>{t("Signup.subtitle")}</p>
+        </div>
+
+        <Card className="bg-muted/60 dark:bg-card">
+          <CardHeader className="space-y-1">
+            <div className="flex items-center gap-2 text-primary">
+              <Mail className="h-4 w-4" />
+              <span className="text-sm font-medium">{t("Signup.enter-credentials")}</span>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <form action={signUpAction} className="space-y-6">
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium">
+                  {t("Signup.emailLabel")}
+                </label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder={t("Signup.emailPlaceholder")}
+                  required
+                  className="w-full"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="password" className="text-sm font-medium">
+                  {t("Signup.passwordLabel")}
+                </label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder={t("Signup.passwordPlaceholder")}
+                  required
+                  className="w-full"
+                />
+              </div>
+
+              <Button className="w-full" type="submit">
+                {t("Signup.signUp")}
+              </Button>
+
+              <FormMessage message={searchParamsResolved} />
+            </form>
+          </CardContent>
+        </Card>
+        <div className="mt-3 pt-3 text-center">
+          <p className="text-muted-foreground">
+            {t("Signup.alreadyHaveAccount")} {" "}
+            <Link className="text-primary font-medium hover:underline" href="/sign-in">
+              {t("Signup.signIn")}
+            </Link>
+          </p>
+        </div>
       </div>
-    </form>
+    </section>
   );
 }

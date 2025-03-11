@@ -1,9 +1,15 @@
-import { signInAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
+import React from 'react';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+} from "@/components/ui/card";
+import { Mail } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { signInAction } from "@/app/actions";
+import { FormMessage } from "@/components/form-message";
 import { getTranslations } from "next-intl/server";
 
 export default async function Login({ searchParams, params }) {
@@ -11,37 +17,75 @@ export default async function Login({ searchParams, params }) {
   const searchParamsResolved = await searchParams;
 
   return (
-    <form className="flex-1 flex flex-col min-w-64">
-      <h1 className="text-2xl font-medium">{t("Login.title")}</h1>
-      <p className="text-sm text-foreground">
-        {t("Login.noAccount")}{" "}
-        <Link className="text-foreground font-medium underline" href="/sign-up">
-          {t("Login.signUp")}
-        </Link>
-      </p>
-      <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-        <Label htmlFor="email">{t("Login.emailLabel")}</Label>
-        <Input name="email" placeholder={t("Login.emailPlaceholder")} required />
-        <div className="flex justify-between items-center">
-          <Label htmlFor="password">{t("Login.passwordLabel")}</Label>
-          <Link
-            className="text-xs text-foreground underline"
-            href="/forgot-password"
-          >
-            {t("Login.forgotPassword")}
-          </Link>
+    <section className="container py-24 sm:py-32">
+      <div className="max-w-md mx-auto">
+        <div className="mb-8">
+          <h2 className="text-4xl font-bold mb-2">{t("Login.title")}</h2>
+          <p>{t("Login.subtile")}</p>          
         </div>
-        <Input
-          type="password"
-          name="password"
-          placeholder={t("Login.passwordPlaceholder")}
-          required
-        />
-        <SubmitButton pendingText={t("Login.signingIn")} formAction={signInAction}>
-          {t("Login.signIn")}
-        </SubmitButton>
-        <FormMessage message={searchParamsResolved} />
+
+        <Card className="bg-muted/60 dark:bg-card">
+          <CardHeader className="space-y-1">
+            <div className="flex items-center gap-2 text-primary">
+              <Mail className="h-4 w-4" />
+              <span className="text-sm font-medium">{t("Login.enter-credentials")}</span>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <form action={signInAction} className="space-y-6">
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium">
+                  {t("Login.emailLabel")}
+                </label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder={t("Login.emailPlaceholder")}
+                  required
+                  className="w-full"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label htmlFor="password" className="text-sm font-medium">
+                    {t("Login.passwordLabel")}
+                  </label>
+                  <Link
+                    className="text-xs text-muted-foreground hover:text-primary"
+                    href="/forgot-password"
+                  >
+                    {t("Login.forgotPassword")}
+                  </Link>
+                </div>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder={t("Login.passwordPlaceholder")}
+                  required
+                  className="w-full"
+                />
+              </div>
+
+              <Button className="w-full" type="submit">
+                {t("Login.signIn")}
+              </Button>
+
+              <FormMessage message={searchParamsResolved} />
+            </form>
+          </CardContent>
+        </Card>
+        <div className="mt-3 pt-3 text-center">
+        <p className="text-muted-foreground">
+            {t("Login.noAccount")}{" "}
+            <Link className="text-primary font-medium hover:underline" href="/sign-up">
+              {t("Login.signUp")}
+            </Link>
+          </p>
+        </div>
       </div>
-    </form>
+    </section>
   );
 }

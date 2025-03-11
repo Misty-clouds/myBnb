@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "apis": [
+    {
+      "identifier": "tappayments",
+      "source": "@tappayments/v1.0#4bmq6x10m799b3lo",
+      "integrity": "sha512-ph6PRhfsHdflRJTd89Dj5+wgSPEcQlNH40nL00Q8Cu8oiKJ55UhIFqZs64ek6Q4mxnMBLfDIEmOP1sqQibSh0g==",
+      "installerVersion": "6.1.2"
+    }
+  ]
+}

@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/Admin/pages/calendar.jsx", "components/ui/calendar.jsx", "app/(auth-pages)/sign-in/page.jsx", "app/(auth-pages)/sign-up/page.jsx", "app/api/bookings/[id]/route.js", "app/api/expenses/[id]/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/Admin/pages/calendar.jsx", "components/ui/calendar.jsx", "app/(auth-pages)/sign-in/page.jsx", "app/(auth-pages)/sign-up/page.jsx", "app/api/bookings/[id]/route.ts", "app/api/expenses/[id]/route.ts", "components/ui/icon.tsx", "app/dashboard/test"],
   "exclude": ["node_modules"]
 }

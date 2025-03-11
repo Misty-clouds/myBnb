@@ -6,7 +6,10 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
     eslint: {
         ignoreDuringBuilds: true,
-      },
+    },
+    images: {
+        domains: ['i.pravatar.cc'],
+    }
 };
  
 module.exports = withNextIntl(nextConfig);

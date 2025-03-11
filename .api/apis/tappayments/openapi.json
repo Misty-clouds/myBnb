@@ -1,0 +1,2901 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Charges",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.tap.company/v2/charges"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "sec0": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "x-bearer-format": "bearer",
+        "x-default": "sk_test_XKokBfNWv6FIYuTMg5sLPjhJ"
+      }
+    }
+  },
+  "security": [
+    {
+      "sec0": []
+    }
+  ],
+  "paths": {
+    "/list": {
+      "post": {
+        "summary": "List all Charges",
+        "description": "This endpoint returns a list of all previously created charges, with the most recent charges appearing first.",
+        "operationId": "list-all-charges",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "period": {
+                    "type": "object",
+                    "description": "Retrieve charges for a selected period",
+                    "properties": {
+                      "date": {
+                        "type": "object",
+                        "description": "From and to date range (charge created date), Measured in Unix epoch time (milliseconds).",
+                        "properties": {
+                          "from": {
+                            "type": "string",
+                            "description": "From date (charge created date), Measured in Unix Epoch Timestamp (milliseconds).",
+                            "default": "1662190768000"
+                          },
+                          "to": {
+                            "type": "string",
+                            "description": "To date (charge created date), Measured in Unix Epoch Timestamp (milliseconds).",
+                            "default": "1662536368000"
+                          }
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "This parameter defines the different transaction states or statuses that can be queried or filtered within the system. The following are the accepted values and their corresponding meanings:  CHARGE: When this value is used, the API will retrieve all charges that have been initiated or requested by the user.  POST: Selecting this value will fetch charges that have been successfully posted or processed to the Settlement system for further processing.  SETTLED: This value will retrieve matured transactions, where the transaction amount has been settled and credited to the Tap wallet.  PAID_OUT: When using this value, the API will return charges that have been successfully paid out to the respective bank or financial institution.  By specifying one of these accepted values as a parameter, the API can be used to fetch specific sets of transactions based on their current state or status in the system.",
+                        "default": "1"
+                      }
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Retrieve the selected list of charges info by charge status. Values can be: INITIATED, IN_PROGRESS, ABANDONED, CANCELLED, FAILED, DECLINED, RESTRICTED, CAPTURED, VOID, TIMEDOUT or UNKNOWN"
+                  },
+                  "sources": {
+                    "type": "array",
+                    "description": "Array of sources (you can specify the list of Source ID's to retrieve).",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "payment_methods": {
+                    "type": "array",
+                    "description": "Array of payment methods (you can specify the list of payment method Source ID's to retrieve).",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "customers": {
+                    "type": "array",
+                    "description": "Array of customers (you can specify the list of Customer ID's to retrieve).",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "charges": {
+                    "type": "array",
+                    "description": "Array of charges (you can specify the list of Source ID's to retrieve).",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "starting_after": {
+                    "type": "string",
+                    "description": "A cursor for use in pagination. The starting_after parameter takes a charge ID that determines your position in the list. For example, if your list request returns 50 charges that end with cus_foo, you can use starting_after=cus_foo in your next call to retrieve the next page of the list."
+                  },
+                  "charge_created": {
+                    "type": "string",
+                    "description": "Created date (charge created date), Measured in Unix Epoch Timestamp (milliseconds)."
+                  },
+                  "mobile": {
+                    "type": "string",
+                    "description": "Filter the results based on customer mobile number"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "filter the results based on customer email"
+                  },
+                  "limit": {
+                    "type": "string",
+                    "description": "The maximum number of charges to return in a single call. Default: 25; Maximum: 50.",
+                    "default": "25"
+                  },
+                  "order": {
+                    "type": "string",
+                    "description": "Sort the results Ascending or Descending by date",
+                    "enum": [
+                      "chronological",
+                      "reverse_chronological"
+                    ]
+                  },
+                  "order_by": {
+                    "type": "string",
+                    "description": "Applying the sorting based on",
+                    "default": "date"
+                  },
+                  "metadata": {
+                    "type": "string",
+                    "description": "Filter the results based on meta data values"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Filter the charges based on charge currency"
+                  },
+                  "payouts": {
+                    "type": "object",
+                    "description": "Retrieve charges based on payouts",
+                    "properties": {
+                      "payout_id": {
+                        "type": "array",
+                        "description": "Array of payouts (you can specify the list of Payouts ID's to retrieve).",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "payout_reference": {
+                        "type": "array",
+                        "description": "Array of payouts references(you can specify the list of Payouts references's to retrieve).",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "reference": {
+                    "type": "object",
+                    "properties": {
+                      "order": {
+                        "type": "array",
+                        "description": "Array of orders references (you can specify the list of orders reference's to retrieve).",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "transaction": {
+                        "type": "array",
+                        "description": "Array of transactions references (you can specify the list of transactions reference's to retrieve).",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  \"object_type\": \"list\",\n  \"live_mode\": false,\n  \"count\": 1,\n  \"has_more\": false,\n  \"api_version\": \"V1.2\",\n  \"charges\": [\n    {\n      \"id\": \"chg_Ri4520181519Pm4k1890208\",\n      \"object\": \"charge\",\n      \"live_mode\": false,\n      \"api_version\": \"V1.2\",\n      \"status\": \"CAPTURED\",\n      \"amount\": 1,\n      \"currency\": \"KWD\",\n      \"threeDSecure\": true,\n      \"save_card\": false,\n      \"statement_descriptor\": \"Sample\",\n      \"transaction\": {\n        \"authorization_id\": \"238792\",\n        \"timezone\": \"UTC+03:00\",\n        \"created\": \"1534594768043\"\n      },\n      \"reference\": {\n        \"track\": \"tck_t4T420181519q9RX1827708\",\n        \"payment\": \"pay_k4K220181519Ml921827708\",\n        \"gateway\": \"123456789\",\n        \"acquirer\": \"823012238792\",\n        \"transaction\": \"txn_0001\",\n        \"order\": \"ord_0001\"\n      },\n      \"response\": {\n        \"code\": \"000\",\n        \"message\": \"Captured\"\n      },\n      \"security\": {\n        \"threeDSecure\": {\n          \"id\": \"3ds_Ka4220181519Bi4r184308\",\n          \"status\": \"Y\"\n        }\n      },\n      \"acquirer\": {\n        \"response\": {\n          \"code\": \"00\",\n          \"message\": \"Approved\"\n        }\n      },\n      \"card\": {\n        \"first_six\": \"512345\",\n        \"last_four\": \"0008\"\n      },\n      \"receipt\": {\n        \"id\": \"20180818151931965\",\n        \"email\": false,\n        \"sms\": false\n      },\n      \"customer\": {\n        \"id\": \"cus_y4P520181519Be9i1821508\",\n        \"first_name\": \"test\",\n        \"middle_name\": \"test\",\n        \"last_name\": \"test\",\n        \"email\": \"test@test.com\",\n        \"phone\": {\n          \"country_code\": \"965\",\n          \"number\": \"50000000\"\n        }\n      },\n      \"source\": {\n        \"object\": \"TOKEN\",\n        \"payment_method\": \"MASTERCARD\",\n        \"id\": \"tok_2zPT5SAHOR6nEG3c0xJvdUCk\"\n      },\n      \"redirect\": {\n        \"url\": \"http://your_website.com/redirect_url\"\n      },\n      \"post\": {\n        \"url\": \"http://your_website.com/redirect_url\"\n      },\n      \"description\": \"Test Description\",\n      \"metadata\": {\n        \"udf1\": \"test 1\",\n        \"udf2\": \"test 2\"\n      },\n      \"payout\": {\n        \"amount\": 9.75,\n        \"currency\": \"KWD\",\n        \"count\": 1\n      }\n    }\n  ]\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "type": "string",
+                      "example": "list"
+                    },
+                    "live_mode": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 1,
+                      "default": 0
+                    },
+                    "has_more": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    },
+                    "api_version": {
+                      "type": "string",
+                      "example": "V1.2"
+                    },
+                    "charges": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "chg_Ri4520181519Pm4k1890208"
+                          },
+                          "object": {
+                            "type": "string",
+                            "example": "charge"
+                          },
+                          "live_mode": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                          },
+                          "api_version": {
+                            "type": "string",
+                            "example": "V1.2"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "CAPTURED"
+                          },
+                          "amount": {
+                            "type": "integer",
+                            "example": 1,
+                            "default": 0
+                          },
+                          "currency": {
+                            "type": "string",
+                            "example": "KWD"
+                          },
+                          "threeDSecure": {
+                            "type": "boolean",
+                            "example": true,
+                            "default": true
+                          },
+                          "save_card": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                          },
+                          "statement_descriptor": {
+                            "type": "string",
+                            "example": "Sample"
+                          },
+                          "transaction": {
+                            "type": "object",
+                            "properties": {
+                              "authorization_id": {
+                                "type": "string",
+                                "example": "238792"
+                              },
+                              "timezone": {
+                                "type": "string",
+                                "example": "UTC+03:00"
+                              },
+                              "created": {
+                                "type": "string",
+                                "example": "1534594768043"
+                              }
+                            }
+                          },
+                          "reference": {
+                            "type": "object",
+                            "properties": {
+                              "track": {
+                                "type": "string",
+                                "example": "tck_t4T420181519q9RX1827708"
+                              },
+                              "payment": {
+                                "type": "string",
+                                "example": "pay_k4K220181519Ml921827708"
+                              },
+                              "gateway": {
+                                "type": "string",
+                                "example": "123456789"
+                              },
+                              "acquirer": {
+                                "type": "string",
+                                "example": "823012238792"
+                              },
+                              "transaction": {
+                                "type": "string",
+                                "example": "txn_0001"
+                              },
+                              "order": {
+                                "type": "string",
+                                "example": "ord_0001"
+                              }
+                            }
+                          },
+                          "response": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string",
+                                "example": "000"
+                              },
+                              "message": {
+                                "type": "string",
+                                "example": "Captured"
+                              }
+                            }
+                          },
+                          "security": {
+                            "type": "object",
+                            "properties": {
+                              "threeDSecure": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "example": "3ds_Ka4220181519Bi4r184308"
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "example": "Y"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "acquirer": {
+                            "type": "object",
+                            "properties": {
+                              "response": {
+                                "type": "object",
+                                "properties": {
+                                  "code": {
+                                    "type": "string",
+                                    "example": "00"
+                                  },
+                                  "message": {
+                                    "type": "string",
+                                    "example": "Approved"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "card": {
+                            "type": "object",
+                            "properties": {
+                              "first_six": {
+                                "type": "string",
+                                "example": "512345"
+                              },
+                              "last_four": {
+                                "type": "string",
+                                "example": "0008"
+                              }
+                            }
+                          },
+                          "receipt": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "20180818151931965"
+                              },
+                              "email": {
+                                "type": "boolean",
+                                "example": false,
+                                "default": true
+                              },
+                              "sms": {
+                                "type": "boolean",
+                                "example": false,
+                                "default": true
+                              }
+                            }
+                          },
+                          "customer": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "cus_y4P520181519Be9i1821508"
+                              },
+                              "first_name": {
+                                "type": "string",
+                                "example": "test"
+                              },
+                              "middle_name": {
+                                "type": "string",
+                                "example": "test"
+                              },
+                              "last_name": {
+                                "type": "string",
+                                "example": "test"
+                              },
+                              "email": {
+                                "type": "string",
+                                "example": "test@test.com"
+                              },
+                              "phone": {
+                                "type": "object",
+                                "properties": {
+                                  "country_code": {
+                                    "type": "string",
+                                    "example": "965"
+                                  },
+                                  "number": {
+                                    "type": "string",
+                                    "example": "50000000"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "source": {
+                            "type": "object",
+                            "properties": {
+                              "object": {
+                                "type": "string",
+                                "example": "TOKEN"
+                              },
+                              "payment_method": {
+                                "type": "string",
+                                "example": "MASTERCARD"
+                              },
+                              "id": {
+                                "type": "string",
+                                "example": "tok_2zPT5SAHOR6nEG3c0xJvdUCk"
+                              }
+                            }
+                          },
+                          "redirect": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "example": "http://your_website.com/redirect_url"
+                              }
+                            }
+                          },
+                          "post": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "example": "http://your_website.com/redirect_url"
+                              }
+                            }
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "Test Description"
+                          },
+                          "metadata": {
+                            "type": "object",
+                            "properties": {
+                              "udf1": {
+                                "type": "string",
+                                "example": "test 1"
+                              },
+                              "udf2": {
+                                "type": "string",
+                                "example": "test 2"
+                              }
+                            }
+                          },
+                          "payout": {
+                            "type": "object",
+                            "properties": {
+                              "amount": {
+                                "type": "number",
+                                "example": 9.75,
+                                "default": 0
+                              },
+                              "currency": {
+                                "type": "string",
+                                "example": "KWD"
+                              },
+                              "count": {
+                                "type": "integer",
+                                "example": 1,
+                                "default": 0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/": {
+      "post": {
+        "summary": "Create a Charge",
+        "description": "This endpoint initiates a charge request to charge a credit card or any other payment source.",
+        "operationId": "create-a-charge",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "amount",
+                  "currency",
+                  "customer",
+                  "source",
+                  "redirect"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "description": "The amount to be collected by this payment, in ISO standard decimal places. A positive decimal representing how much to charge in the currency unit (e.g: 100 to charge $100 and 100.5 to charge $100.50). The minimum amount is $0.100 for any charge currency.",
+                    "default": 1,
+                    "format": "float"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Three-letter ISO currency code, in uppercase. Must be a supported currency.",
+                    "default": "KWD"
+                  },
+                  "customer_initiated": {
+                    "type": "boolean",
+                    "description": "This parameter determines whether the charge was initiated by customer or not",
+                    "default": true
+                  },
+                  "threeDSecure": {
+                    "type": "boolean",
+                    "description": "The 3D Secure request status for a particular charge. Values can be either ``true`` or ``false``.",
+                    "default": true
+                  },
+                  "save_card": {
+                    "type": "boolean",
+                    "description": "Payer can save credit cards for future purpose but a customer phone number is required to save the card. Values can be either be True or False. In order to use this feature, save card feature needs to be activated on the Merchant Account.",
+                    "default": false
+                  },
+                  "payment_agreement": {
+                    "type": "object",
+                    "description": "Serves as a unique identifier for referencing and managing the payment agreement",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Serves as a unique identifier for referencing and managing the payment agreement."
+                      },
+                      "contract": {
+                        "type": "object",
+                        "description": "Represents the unique identifier for the associated contract, helping in identification and referencing.",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Uniquely identifies the agreement between the merchant and the customer, using an invoice ID, subscription ID, card ID, or order ID."
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "An arbitrary string which you can attach to a ``Charge`` request with more details, if needed.",
+                    "default": "Test Description"
+                  },
+                  "order": {
+                    "type": "object",
+                    "description": "The object represents a specific order information such as order ID of the related transaction.",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The ID of the Order"
+                      }
+                    }
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "description": "The set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.",
+                    "properties": {
+                      "udf1": {
+                        "type": "string",
+                        "description": "Merchant can define new parameters (key/value pairs) within this metadata object.",
+                        "default": "Metadata 1"
+                      }
+                    }
+                  },
+                  "receipt": {
+                    "type": "object",
+                    "description": "Note: this feature is no longer supported",
+                    "properties": {
+                      "email": {
+                        "type": "boolean",
+                        "description": "Set it as ``true` if this charge’s receipt needs to be sent to the customer's email address.",
+                        "default": false
+                      },
+                      "sms": {
+                        "type": "boolean",
+                        "description": "Set it as ``true` if this charge’s receipt needs to be sent to the customer's phone number.",
+                        "default": false
+                      }
+                    }
+                  },
+                  "reference": {
+                    "type": "object",
+                    "description": "The reference numbers related to the charge.",
+                    "properties": {
+                      "transaction": {
+                        "type": "string",
+                        "description": "The transaction reference number provided by the Merchant.",
+                        "default": "txn_01"
+                      },
+                      "order": {
+                        "type": "string",
+                        "description": "The order reference number provided by the Merchant.",
+                        "default": "ord_01"
+                      },
+                      "idempotent": {
+                        "type": "string",
+                        "description": "The idempotent string to restrict duplicate payments. If the same idempotent string is passed, a new charge will not be initiated, whereas the response of the first charge will be returned."
+                      }
+                    }
+                  },
+                  "customer": {
+                    "type": "object",
+                    "description": "The details about the customer who will be performing the transaction.",
+                    "required": [
+                      "first_name",
+                      "email"
+                    ],
+                    "properties": {
+                      "first_name": {
+                        "type": "string",
+                        "description": "The First Name of the Customer.",
+                        "default": "test"
+                      },
+                      "middle_name": {
+                        "type": "string",
+                        "description": "The Middle Name of the Customer.",
+                        "default": "test"
+                      },
+                      "last_name": {
+                        "type": "string",
+                        "description": "The Last Name of the Customer.",
+                        "default": "test"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "The Email ID of the Customer.",
+                        "default": "test@test.com"
+                      },
+                      "phone": {
+                        "type": "object",
+                        "description": "The Phone Number of the Customer.",
+                        "properties": {
+                          "country_code": {
+                            "type": "integer",
+                            "description": "The Country Code of the Phone Number. Do not add +.",
+                            "default": 965,
+                            "format": "int32"
+                          },
+                          "number": {
+                            "type": "integer",
+                            "description": "The Number without Country Code.",
+                            "default": 51234567,
+                            "format": "int32"
+                          }
+                        }
+                      },
+                      "id": {
+                        "type": "string",
+                        "description": "The ID of an existing Customer that will be charged in this request. If ID is passed, no need to pass the other parameters of this object."
+                      }
+                    }
+                  },
+                  "merchant": {
+                    "type": "object",
+                    "description": "The ID of the Merchant Account. Available on the Tap Dashboard (goSell > API Credentials > Merchant ID)",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The ID of the Merchant Account to which the funds need to be routed.",
+                        "default": "1234"
+                      }
+                    }
+                  },
+                  "source": {
+                    "type": "object",
+                    "description": "The details about the payment method at the time of the transaction. Possible values: for local payment methods, use the respective source_id. Example:  For KNET, use ``src_kw.knet``; for capturing a token, use the ``token_id``; to authorize an existing authorized transaction use the ``authorize_id``; to display all payment methods in a Tap hosted page, use ``src_all``; to display only the card payment methods in a Tap hosted page, use ``src_card``; for capturing from saved card for customer, create a token by using [Create a Token API](https://developers.tap.company/reference/create-a-token-from-saved-card) (make sure to pass ``customer_id`` in the customer object); . Refer to Payment Methods guide for more information.",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "default": "src_all"
+                      }
+                    }
+                  },
+                  "post": {
+                    "type": "object",
+                    "description": "The Webhook URL. After payment is completed, Tap will POST the response payload as a raw data to this URL.",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "default": "http://your_website.com/post_url"
+                      }
+                    }
+                  },
+                  "redirect": {
+                    "type": "object",
+                    "description": "After payment is completed, payer will be redirected to this URL (KNET, mada and 3D secure charge requests requires Redirect URL)",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "default": "http://your_website.com/redirect_url"
+                      }
+                    }
+                  },
+                  "payment_provider": {
+                    "type": "object",
+                    "description": "Information about the payment provider associated with this charge",
+                    "properties": {
+                      "technology": {
+                        "type": "object",
+                        "description": "Information about the payment provider technology associated with this charge",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The technology ID provided by Tap"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "platform": {
+                    "type": "object",
+                    "description": "The Platform parameter identifies the platform under which the merchant is operating, linking the transaction to the appropriate platform.",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The Platform ID parameter identifies the platform under which the merchant is operating, linking the transaction to the appropriate platform."
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "post response": {
+                  "value": {
+                    "method": "POST",
+                    "path": "/",
+                    "query": {},
+                    "client_ip": "168.187.154.71",
+                    "url": "https://1f3b186efe31e8696c144578816c5443.m.pipedream.net/",
+                    "headers": {
+                      "host": "1f3b186efe31e8696c144578816c5443.m.pipedream.net",
+                      "content-length": "2915",
+                      "content-type": "application/json",
+                      "hashstring": "16250de7d6c99b7cbb9866f91c348791a5a1dca3649d6ce64f0699c97da49a90",
+                      "hash": "67f62adfb3153f470f90738c4546d10795cbfc070e7f929113fbd19488535e71"
+                    },
+                    "bodyRaw": "{\r\n  \"id\": \"chg_TS032420221429Km940109459\",\r\n  \"object\": \"charge\",\r\n  \"live_mode\": false,\r\n  \"api_version\": \"V2\",\r\n  \"method\": \"POST\",\r\n  \"status\": \"CAPTURED\",\r\n  \"amount\": 1.00,\r\n  \"currency\": \"USD\",\r\n  \"threeDSecure\": true,\r\n  \"card_threeDSecure\": false,\r\n  \"save_card\": false,\r\n  \"merchant_id\": \"\",\r\n  \"product\": \"\",\r\n  \"statement_descriptor\": \"Sample\",\r\n  \"description\": \"Test Description\",\r\n  \"metadata\": {\r\n    \"udf1\": \"test 1\",\r\n    \"udf2\": \"test 2\"\r\n  },\r\n  \"transaction\": {\r\n    \"authorization_id\": \"294986\",\r\n    \"timezone\": \"UTC+03:00\",\r\n    \"created\": \"1662042581741\",\r\n    \"expiry\": {\r\n      \"period\": 30,\r\n      \"type\": \"MINUTE\"\r\n    },\r\n    \"asynchronous\": false,\r\n    \"amount\": 0.318,\r\n    \"currency\": \"KWD\"\r\n  },\r\n  \"reference\": {\r\n    \"track\": \"tck_TS032420221429Dj490109459\",\r\n    \"payment\": \"2401221429094596907\",\r\n    \"gateway\": \"123456789\",\r\n    \"acquirer\": \"224411294986\",\r\n    \"transaction\": \"txn_0001\",\r\n    \"order\": \"ord_0001\"\r\n  },\r\n  \"response\": {\r\n    \"code\": \"000\",\r\n    \"message\": \"Captured\"\r\n  },\r\n  \"security\": {\r\n    \"threeDSecure\": {\r\n      \"id\": \"3ds_TS034120221429o2Q50109741\",\r\n      \"status\": \"Y\"\r\n    }\r\n  },\r\n  \"acquirer\": {\r\n    \"response\": {\r\n      \"code\": \"00\",\r\n      \"message\": \"Approved\"\r\n    }\r\n  },\r\n  \"gateway\": {\r\n    \"response\": {\r\n      \"code\": \"0\",\r\n      \"message\": \"Transaction Approved\"\r\n    }\r\n  },\r\n  \"card\": {\r\n    \"object\": \"card\",\r\n    \"first_six\": \"512345\",\r\n    \"scheme\": \"MASTERCARD\",\r\n    \"brand\": \"MASTERCARD\",\r\n    \"last_four\": \"0008\"\r\n  },\r\n  \"receipt\": {\r\n    \"id\": \"202501221429096826\",\r\n    \"email\": false,\r\n    \"sms\": true\r\n  },\r\n  \"customer\": {\r\n    \"id\": \"cus_TS064220221429Zl940109178\",\r\n    \"first_name\": \"test\",\r\n    \"last_name\": \"test\",\r\n    \"email\": \"test@test.com\",\r\n    \"phone\": {\r\n      \"country_code\": \"965\",\r\n      \"number\": \"50000000\"\r\n    }\r\n  },\r\n  \"merchant\": {\r\n    \"country\": \"KW\",\r\n    \"currency\": \"KWD\",\r\n    \"id\": \"599424\"\r\n  },\r\n  \"source\": {\r\n    \"object\": \"token\",\r\n    \"type\": \"CARD_NOT_PRESENT\",\r\n    \"payment_type\": \"CREDIT\",\r\n    \"payment_method\": \"MASTERCARD\",\r\n    \"channel\": \"INTERNET\",\r\n    \"id\": \"tok_ZqrX39221129u4bb1fA8U654\"\r\n  },\r\n  \"redirect\": {\r\n    \"status\": \"PENDING\",\r\n    \"url\": \"http://your_website.com/redirect_url\"\r\n  },\r\n  \"post\": {\r\n    \"attempt\": 1,\r\n    \"status\": \"PENDING\",\r\n    \"url\": \"https://1f3b186efe31e8696c144578816c5443.m.pipedream.net\"\r\n  },\r\n  \"activities\": [\r\n    {\r\n      \"id\": \"activity_TS034220221429l2N50109209\",\r\n      \"object\": \"activity\",\r\n      \"created\": 1662042581741,\r\n      \"status\": \"INITIATED\",\r\n      \"currency\": \"USD\",\r\n      \"amount\": 1.00,\r\n      \"remarks\": \"charge - created\"\r\n    },\r\n    {\r\n      \"id\": \"activity_TS040620221430Re2o0109626\",\r\n      \"object\": \"activity\",\r\n      \"created\": 1662042606626,\r\n      \"status\": \"CAPTURED\",\r\n      \"currency\": \"KWD\",\r\n      \"amount\": 0.318,\r\n      \"remarks\": \"charge - captured\"\r\n    }\r\n  ],\r\n  \"auto_reversed\": false\r\n}",
+                    "body": {
+                      "id": "chg_TS032420221429Km940109459",
+                      "object": "charge",
+                      "live_mode": false,
+                      "api_version": "V2",
+                      "method": "POST",
+                      "status": "CAPTURED",
+                      "amount": 1,
+                      "currency": "USD",
+                      "threeDSecure": true,
+                      "card_threeDSecure": false,
+                      "save_card": false,
+                      "merchant_id": "",
+                      "product": "",
+                      "statement_descriptor": "Sample",
+                      "description": "Test Description",
+                      "metadata": {
+                        "udf1": "test 1",
+                        "udf2": "test 2"
+                      },
+                      "transaction": {
+                        "authorization_id": "294986",
+                        "timezone": "UTC+03:00",
+                        "created": "1662042581741",
+                        "expiry": {
+                          "period": 30,
+                          "type": "MINUTE"
+                        },
+                        "asynchronous": false,
+                        "amount": 0.318,
+                        "currency": "KWD"
+                      },
+                      "reference": {
+                        "track": "tck_TS032420221429Dj490109459",
+                        "payment": "2401221429094596907",
+                        "gateway": "123456789",
+                        "acquirer": "224411294986",
+                        "transaction": "txn_0001",
+                        "order": "ord_0001"
+                      },
+                      "response": {
+                        "code": "000",
+                        "message": "Captured"
+                      },
+                      "security": {
+                        "threeDSecure": {
+                          "id": "3ds_TS034120221429o2Q50109741",
+                          "status": "Y"
+                        }
+                      },
+                      "acquirer": {
+                        "response": {
+                          "code": "00",
+                          "message": "Approved"
+                        }
+                      },
+                      "gateway": {
+                        "response": {
+                          "code": "0",
+                          "message": "Transaction Approved"
+                        }
+                      },
+                      "card": {
+                        "object": "card",
+                        "first_six": "512345",
+                        "scheme": "MASTERCARD",
+                        "brand": "MASTERCARD",
+                        "last_four": "0008"
+                      },
+                      "receipt": {
+                        "id": "202501221429096826",
+                        "email": false,
+                        "sms": true
+                      },
+                      "customer": {
+                        "id": "cus_TS064220221429Zl940109178",
+                        "first_name": "test",
+                        "last_name": "test",
+                        "email": "test@test.com",
+                        "phone": {
+                          "country_code": "965",
+                          "number": "50000000"
+                        }
+                      },
+                      "merchant": {
+                        "country": "KW",
+                        "currency": "KWD",
+                        "id": "599424"
+                      },
+                      "source": {
+                        "object": "token",
+                        "type": "CARD_NOT_PRESENT",
+                        "payment_type": "CREDIT",
+                        "payment_method": "MASTERCARD",
+                        "channel": "INTERNET",
+                        "id": "tok_ZqrX39221129u4bb1fA8U654"
+                      },
+                      "redirect": {
+                        "status": "PENDING",
+                        "url": "http://your_website.com/redirect_url"
+                      },
+                      "post": {
+                        "attempt": 1,
+                        "status": "PENDING",
+                        "url": "https://1f3b186efe31e8696c144578816c5443.m.pipedream.net"
+                      },
+                      "activities": [
+                        {
+                          "id": "activity_TS034220221429l2N50109209",
+                          "object": "activity",
+                          "created": 1662042581741,
+                          "status": "INITIATED",
+                          "currency": "USD",
+                          "amount": 1,
+                          "remarks": "charge - created"
+                        },
+                        {
+                          "id": "activity_TS040620221430Re2o0109626",
+                          "object": "activity",
+                          "created": 1662042606626,
+                          "status": "CAPTURED",
+                          "currency": "KWD",
+                          "amount": 0.318,
+                          "remarks": "charge - captured"
+                        }
+                      ],
+                      "auto_reversed": false
+                    }
+                  }
+                },
+                "charge request with payment agreement": {
+                  "value": {
+                    "amount": 1,
+                    "currency": "KWD",
+                    "customer_initiated": true,
+                    "threeDSecure": true,
+                    "save_card": false,
+                    "payment_agreement": {
+                      "id": "payment_agreement_TS07A4620230032t4K21406294"
+                    },
+                    "description": "Test Description",
+                    "metadata": {
+                      "udf1": "Metadata 1"
+                    },
+                    "reference": {
+                      "transaction": "txn_01",
+                      "order": "ord_01"
+                    },
+                    "receipt": {
+                      "email": true,
+                      "sms": true
+                    },
+                    "customer": {
+                      "id": "cus_TS01A4620230032p4KP1406279"
+                    },
+                    "source": {
+                      "id": "tok_2uKe58232153ZmxV138r5c637"
+                    },
+                    "post": {
+                      "url": "http://your_website.com/post_url"
+                    },
+                    "redirect": {
+                      "url": "http://your_website.com/redirect_url"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n\t\"id\": \"chg_TS012520220955Rr950709475\",\n\t\"object\": \"charge\",\n\t\"live_mode\": false,\n\t\"api_version\": \"V2\",\n\t\"method\": \"CREATE\",\n\t\"status\": \"INITIATED\",\n\t\"amount\": 1.000,\n\t\"currency\": \"KWD\",\n\t\"threeDSecure\": true,\n\t\"card_threeDSecure\": false,\n\t\"save_card\": false,\n\t\"merchant_id\": \"\",\n\t\"product\": \"GOSELL\",\n\t\"description\": \"Test Description\",\n\t\"metadata\": {\n\t\t\"udf1\": \"Metadata 1\"\n\t},\n\t\"transaction\": {\n\t\t\"timezone\": \"UTC+03:00\",\n\t\t\"created\": \"1662544525491\",\n\t\t\"url\": \"https://checkout.payments.tap.company?mode=page&token=6318405da53ea40ebd4da0c0\",\n\t\t\"expiry\": {\n\t\t\t\"period\": 30,\n\t\t\t\"type\": \"MINUTE\"\n\t\t},\n\t\t\"asynchronous\": false,\n\t\t\"amount\": 1.000,\n\t\t\"currency\": \"KWD\"\n\t},\n\t\"reference\": {\n\t\t\"transaction\": \"txn_01\",\n\t\t\"order\": \"ord_01\"\n\t},\n\t\"response\": {\n\t\t\"code\": \"100\",\n\t\t\"message\": \"Initiated\"\n\t},\n\t\"receipt\": {\n\t\t\"email\": true,\n\t\t\"sms\": true\n\t},\n\t\"customer\": {\n\t\t\"first_name\": \"test\",\n\t\t\"last_name\": \"test\",\n\t\t\"email\": \"test@test.com\",\n\t\t\"phone\": {\n\t\t\t\"country_code\": \"965\",\n\t\t\t\"number\": \"51234567\"\n\t\t}\n\t},\n\t\"merchant\": {\n\t\t\"id\": \"599424\"\n\t},\n\t\"source\": {\n\t\t\"object\": \"source\",\n\t\t\"id\": \"src_all\"\n\t},\n\t\"redirect\": {\n\t\t\"status\": \"PENDING\",\n\t\t\"url\": \"http://your_website.com/redirect_url\"\n\t},\n\t\"post\": {\n\t\t\"status\": \"PENDING\",\n\t\t\"url\": \"http://your_website.com/post_url\"\n\t},\n\t\"activities\": [\n\t\t{\n\t\t\t\"id\": \"activity_TS062620220955Nk440709312\",\n\t\t\t\"object\": \"activity\",\n\t\t\t\"created\": 1662544525491,\n\t\t\t\"status\": \"INITIATED\",\n\t\t\t\"currency\": \"KWD\",\n\t\t\t\"amount\": 1.000,\n\t\t\t\"remarks\": \"charge - created\"\n\t\t}\n\t],\n\t\"auto_reversed\": false\n}"
+                  },
+                  "charge response with payment agreement": {
+                    "value": "{\n\t\"id\": \"chg_TS02A2720230055g4JO1406864\",\n\t\"object\": \"charge\",\n\t\"live_mode\": false,\n\t\"customer_initiated\": true,\n\t\"api_version\": \"V2\",\n\t\"method\": \"GET\",\n\t\"status\": \"CAPTURED\",\n\t\"amount\": 1.000,\n\t\"currency\": \"KWD\",\n\t\"threeDSecure\": true,\n\t\"card_threeDSecure\": false,\n\t\"save_card\": false,\n\t\"merchant_id\": \"\",\n\t\"product\": \"GOSELL\",\n\t\"description\": \"Test Description\",\n\t\"metadata\": {\n\t\t\"udf1\": \"Metadata 1\"\n\t},\n\t\"transaction\": {\n\t\t\"authorization_id\": \"100204\",\n\t\t\"timezone\": \"UTC+03:00\",\n\t\t\"created\": \"1686704127943\",\n\t\t\"expiry\": {\n\t\t\t\"period\": 30,\n\t\t\t\"type\": \"MINUTE\"\n\t\t},\n\t\t\"asynchronous\": false,\n\t\t\"amount\": 1.000,\n\t\t\"currency\": \"KWD\"\n\t},\n\t\"reference\": {\n\t\t\"track\": \"tck_TS02A2920230055e5R41406896\",\n\t\t\"payment\": \"2914230055068969225\",\n\t\t\"gateway\": \"123456789012345\",\n\t\t\"acquirer\": \"316421100204\",\n\t\t\"transaction\": \"txn_01\",\n\t\t\"order\": \"ord_01\"\n\t},\n\t\"response\": {\n\t\t\"code\": \"000\",\n\t\t\"message\": \"Captured\"\n\t},\n\t\"security\": {\n\t\t\"threeDSecure\": {\n\t\t\t\"id\": \"3ds_TS07A2720230055l5Q21406943\",\n\t\t\t\"status\": \"Y\"\n\t\t}\n\t},\n\t\"acquirer\": {\n\t\t\"response\": {\n\t\t\t\"code\": \"00\",\n\t\t\t\"message\": \"Approved\"\n\t\t}\n\t},\n\t\"gateway\": {\n\t\t\"response\": {\n\t\t\t\"code\": \"0\",\n\t\t\t\"message\": \"Transaction Approved\"\n\t\t}\n\t},\n\t\"card\": {\n\t\t\"object\": \"card\",\n\t\t\"first_six\": \"424242\",\n\t\t\"scheme\": \"VISA\",\n\t\t\"brand\": \"VISA\",\n\t\t\"last_four\": \"4242\"\n\t},\n\t\"receipt\": {\n\t\t\"id\": \"203014230055062725\",\n\t\t\"email\": true,\n\t\t\"sms\": true\n\t},\n\t\"customer\": {\n\t\t\"id\": \"cus_TS01A4620230032p4KP1406279\",\n\t\t\"first_name\": \"test\",\n\t\t\"middle_name\": \"test\",\n\t\t\"last_name\": \"test\",\n\t\t\"email\": \"test@test.com\",\n\t\t\"phone\": {\n\t\t\t\"country_code\": \"965\",\n\t\t\t\"number\": \"51234567\"\n\t\t}\n\t},\n\t\"merchant\": {\n\t\t\"country\": \"KW\",\n\t\t\"currency\": \"KWD\",\n\t\t\"id\": \"599424\"\n\t},\n\t\"source\": {\n\t\t\"object\": \"token\",\n\t\t\"type\": \"CARD_NOT_PRESENT\",\n\t\t\"payment_type\": \"CREDIT\",\n\t\t\"payment_method\": \"VISA\",\n\t\t\"channel\": \"INTERNET\",\n\t\t\"id\": \"tok_2uKe58232153ZmxV138r5c637\"\n\t},\n\t\"redirect\": {\n\t\t\"status\": \"SUCCESS\",\n\t\t\"url\": \"http://your_website.com/redirect_url\"\n\t},\n\t\"post\": {\n\t\t\"status\": \"ERROR\",\n\t\t\"url\": \"http://your_website.com/post_url\"\n\t},\n\t\"activities\": [\n\t\t{\n\t\t\t\"id\": \"activity_TS07A3020230055j5O91406255\",\n\t\t\t\"object\": \"activity\",\n\t\t\t\"created\": 1686704127943,\n\t\t\t\"status\": \"INITIATED\",\n\t\t\t\"currency\": \"KWD\",\n\t\t\t\"amount\": 1.000,\n\t\t\t\"remarks\": \"charge - created\"\n\t\t},\n\t\t{\n\t\t\t\"id\": \"activity_TS05A4220230057o2L51406773\",\n\t\t\t\"object\": \"activity\",\n\t\t\t\"created\": 1686704262773,\n\t\t\t\"status\": \"CAPTURED\",\n\t\t\t\"currency\": \"KWD\",\n\t\t\t\"amount\": 1.000,\n\t\t\t\"remarks\": \"charge - captured\"\n\t\t}\n\t],\n\t\"auto_reversed\": false,\n\t\"payment_agreement\": {\n\t\t\"id\": \"payment_agreement_TS07A4620230032t4K21406294\",\n\t\t\"total_payments_count\": 1,\n\t\t\"contract\": {\n\t\t\t\"id\": \"card_YOh6102321312TNL13qE5C584\",\n\t\t\t\"type\": \"UNSCHEDULED\"\n\t\t},\n\t\t\"variable_amount\": {\n\t\t\t\"id\": \"variable_amount_TS07A4620230032Ra9k1406294\"\n\t\t}\n\t}\n}"
+                  }
+                },
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "chg_TS012520220955Rr950709475"
+                        },
+                        "object": {
+                          "type": "string",
+                          "example": "charge"
+                        },
+                        "live_mode": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "api_version": {
+                          "type": "string",
+                          "example": "V2"
+                        },
+                        "method": {
+                          "type": "string",
+                          "example": "CREATE"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "INITIATED"
+                        },
+                        "amount": {
+                          "type": "integer",
+                          "example": 1,
+                          "default": 0
+                        },
+                        "currency": {
+                          "type": "string",
+                          "example": "KWD"
+                        },
+                        "threeDSecure": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "card_threeDSecure": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "save_card": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "merchant_id": {
+                          "type": "string",
+                          "example": ""
+                        },
+                        "product": {
+                          "type": "string",
+                          "example": "GOSELL"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Test Description"
+                        },
+                        "metadata": {
+                          "type": "object",
+                          "properties": {
+                            "udf1": {
+                              "type": "string",
+                              "example": "Metadata 1"
+                            }
+                          }
+                        },
+                        "transaction": {
+                          "type": "object",
+                          "properties": {
+                            "timezone": {
+                              "type": "string",
+                              "example": "UTC+03:00"
+                            },
+                            "created": {
+                              "type": "string",
+                              "example": "1662544525491"
+                            },
+                            "url": {
+                              "type": "string",
+                              "example": "https://checkout.payments.tap.company?mode=page&token=6318405da53ea40ebd4da0c0"
+                            },
+                            "expiry": {
+                              "type": "object",
+                              "properties": {
+                                "period": {
+                                  "type": "integer",
+                                  "example": 30,
+                                  "default": 0
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "example": "MINUTE"
+                                }
+                              }
+                            },
+                            "asynchronous": {
+                              "type": "boolean",
+                              "example": false,
+                              "default": true
+                            },
+                            "amount": {
+                              "type": "integer",
+                              "example": 1,
+                              "default": 0
+                            },
+                            "currency": {
+                              "type": "string",
+                              "example": "KWD"
+                            }
+                          }
+                        },
+                        "reference": {
+                          "type": "object",
+                          "properties": {
+                            "transaction": {
+                              "type": "string",
+                              "example": "txn_01"
+                            },
+                            "order": {
+                              "type": "string",
+                              "example": "ord_01"
+                            }
+                          }
+                        },
+                        "response": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "string",
+                              "example": "100"
+                            },
+                            "message": {
+                              "type": "string",
+                              "example": "Initiated"
+                            }
+                          }
+                        },
+                        "receipt": {
+                          "type": "object",
+                          "properties": {
+                            "email": {
+                              "type": "boolean",
+                              "example": true,
+                              "default": true
+                            },
+                            "sms": {
+                              "type": "boolean",
+                              "example": true,
+                              "default": true
+                            }
+                          }
+                        },
+                        "customer": {
+                          "type": "object",
+                          "properties": {
+                            "first_name": {
+                              "type": "string",
+                              "example": "test"
+                            },
+                            "last_name": {
+                              "type": "string",
+                              "example": "test"
+                            },
+                            "email": {
+                              "type": "string",
+                              "example": "test@test.com"
+                            },
+                            "phone": {
+                              "type": "object",
+                              "properties": {
+                                "country_code": {
+                                  "type": "string",
+                                  "example": "965"
+                                },
+                                "number": {
+                                  "type": "string",
+                                  "example": "51234567"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "merchant": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "599424"
+                            }
+                          }
+                        },
+                        "source": {
+                          "type": "object",
+                          "properties": {
+                            "object": {
+                              "type": "string",
+                              "example": "source"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "src_all"
+                            }
+                          }
+                        },
+                        "redirect": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "example": "PENDING"
+                            },
+                            "url": {
+                              "type": "string",
+                              "example": "http://your_website.com/redirect_url"
+                            }
+                          }
+                        },
+                        "post": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "example": "PENDING"
+                            },
+                            "url": {
+                              "type": "string",
+                              "example": "http://your_website.com/post_url"
+                            }
+                          }
+                        },
+                        "activities": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "activity_TS062620220955Nk440709312"
+                              },
+                              "object": {
+                                "type": "string",
+                                "example": "activity"
+                              },
+                              "created": {
+                                "type": "integer",
+                                "example": 1662544525491,
+                                "default": 0
+                              },
+                              "status": {
+                                "type": "string",
+                                "example": "INITIATED"
+                              },
+                              "currency": {
+                                "type": "string",
+                                "example": "KWD"
+                              },
+                              "amount": {
+                                "type": "integer",
+                                "example": 1,
+                                "default": 0
+                              },
+                              "remarks": {
+                                "type": "string",
+                                "example": "charge - created"
+                              }
+                            }
+                          }
+                        },
+                        "auto_reversed": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        }
+                      }
+                    },
+                    {
+                      "title": "charge response with payment agreement",
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "chg_TS02A2720230055g4JO1406864"
+                        },
+                        "object": {
+                          "type": "string",
+                          "example": "charge"
+                        },
+                        "live_mode": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "customer_initiated": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "api_version": {
+                          "type": "string",
+                          "example": "V2"
+                        },
+                        "method": {
+                          "type": "string",
+                          "example": "GET"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "CAPTURED"
+                        },
+                        "amount": {
+                          "type": "integer",
+                          "example": 1,
+                          "default": 0
+                        },
+                        "currency": {
+                          "type": "string",
+                          "example": "KWD"
+                        },
+                        "threeDSecure": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "card_threeDSecure": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "save_card": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "merchant_id": {
+                          "type": "string",
+                          "example": ""
+                        },
+                        "product": {
+                          "type": "string",
+                          "example": "GOSELL"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Test Description"
+                        },
+                        "metadata": {
+                          "type": "object",
+                          "properties": {
+                            "udf1": {
+                              "type": "string",
+                              "example": "Metadata 1"
+                            }
+                          }
+                        },
+                        "transaction": {
+                          "type": "object",
+                          "properties": {
+                            "authorization_id": {
+                              "type": "string",
+                              "example": "100204"
+                            },
+                            "timezone": {
+                              "type": "string",
+                              "example": "UTC+03:00"
+                            },
+                            "created": {
+                              "type": "string",
+                              "example": "1686704127943"
+                            },
+                            "expiry": {
+                              "type": "object",
+                              "properties": {
+                                "period": {
+                                  "type": "integer",
+                                  "example": 30,
+                                  "default": 0
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "example": "MINUTE"
+                                }
+                              }
+                            },
+                            "asynchronous": {
+                              "type": "boolean",
+                              "example": false,
+                              "default": true
+                            },
+                            "amount": {
+                              "type": "integer",
+                              "example": 1,
+                              "default": 0
+                            },
+                            "currency": {
+                              "type": "string",
+                              "example": "KWD"
+                            }
+                          }
+                        },
+                        "reference": {
+                          "type": "object",
+                          "properties": {
+                            "track": {
+                              "type": "string",
+                              "example": "tck_TS02A2920230055e5R41406896"
+                            },
+                            "payment": {
+                              "type": "string",
+                              "example": "2914230055068969225"
+                            },
+                            "gateway": {
+                              "type": "string",
+                              "example": "123456789012345"
+                            },
+                            "acquirer": {
+                              "type": "string",
+                              "example": "316421100204"
+                            },
+                            "transaction": {
+                              "type": "string",
+                              "example": "txn_01"
+                            },
+                            "order": {
+                              "type": "string",
+                              "example": "ord_01"
+                            }
+                          }
+                        },
+                        "response": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "string",
+                              "example": "000"
+                            },
+                            "message": {
+                              "type": "string",
+                              "example": "Captured"
+                            }
+                          }
+                        },
+                        "security": {
+                          "type": "object",
+                          "properties": {
+                            "threeDSecure": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "example": "3ds_TS07A2720230055l5Q21406943"
+                                },
+                                "status": {
+                                  "type": "string",
+                                  "example": "Y"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "acquirer": {
+                          "type": "object",
+                          "properties": {
+                            "response": {
+                              "type": "object",
+                              "properties": {
+                                "code": {
+                                  "type": "string",
+                                  "example": "00"
+                                },
+                                "message": {
+                                  "type": "string",
+                                  "example": "Approved"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "gateway": {
+                          "type": "object",
+                          "properties": {
+                            "response": {
+                              "type": "object",
+                              "properties": {
+                                "code": {
+                                  "type": "string",
+                                  "example": "0"
+                                },
+                                "message": {
+                                  "type": "string",
+                                  "example": "Transaction Approved"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "card": {
+                          "type": "object",
+                          "properties": {
+                            "object": {
+                              "type": "string",
+                              "example": "card"
+                            },
+                            "first_six": {
+                              "type": "string",
+                              "example": "424242"
+                            },
+                            "scheme": {
+                              "type": "string",
+                              "example": "VISA"
+                            },
+                            "brand": {
+                              "type": "string",
+                              "example": "VISA"
+                            },
+                            "last_four": {
+                              "type": "string",
+                              "example": "4242"
+                            }
+                          }
+                        },
+                        "receipt": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "203014230055062725"
+                            },
+                            "email": {
+                              "type": "boolean",
+                              "example": true,
+                              "default": true
+                            },
+                            "sms": {
+                              "type": "boolean",
+                              "example": true,
+                              "default": true
+                            }
+                          }
+                        },
+                        "customer": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "cus_TS01A4620230032p4KP1406279"
+                            },
+                            "first_name": {
+                              "type": "string",
+                              "example": "test"
+                            },
+                            "middle_name": {
+                              "type": "string",
+                              "example": "test"
+                            },
+                            "last_name": {
+                              "type": "string",
+                              "example": "test"
+                            },
+                            "email": {
+                              "type": "string",
+                              "example": "test@test.com"
+                            },
+                            "phone": {
+                              "type": "object",
+                              "properties": {
+                                "country_code": {
+                                  "type": "string",
+                                  "example": "965"
+                                },
+                                "number": {
+                                  "type": "string",
+                                  "example": "51234567"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "merchant": {
+                          "type": "object",
+                          "properties": {
+                            "country": {
+                              "type": "string",
+                              "example": "KW"
+                            },
+                            "currency": {
+                              "type": "string",
+                              "example": "KWD"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "599424"
+                            }
+                          }
+                        },
+                        "source": {
+                          "type": "object",
+                          "properties": {
+                            "object": {
+                              "type": "string",
+                              "example": "token"
+                            },
+                            "type": {
+                              "type": "string",
+                              "example": "CARD_NOT_PRESENT"
+                            },
+                            "payment_type": {
+                              "type": "string",
+                              "example": "CREDIT"
+                            },
+                            "payment_method": {
+                              "type": "string",
+                              "example": "VISA"
+                            },
+                            "channel": {
+                              "type": "string",
+                              "example": "INTERNET"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "tok_2uKe58232153ZmxV138r5c637"
+                            }
+                          }
+                        },
+                        "redirect": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "example": "SUCCESS"
+                            },
+                            "url": {
+                              "type": "string",
+                              "example": "http://your_website.com/redirect_url"
+                            }
+                          }
+                        },
+                        "post": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "example": "ERROR"
+                            },
+                            "url": {
+                              "type": "string",
+                              "example": "http://your_website.com/post_url"
+                            }
+                          }
+                        },
+                        "activities": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "activity_TS07A3020230055j5O91406255"
+                              },
+                              "object": {
+                                "type": "string",
+                                "example": "activity"
+                              },
+                              "created": {
+                                "type": "integer",
+                                "example": 1686704127943,
+                                "default": 0
+                              },
+                              "status": {
+                                "type": "string",
+                                "example": "INITIATED"
+                              },
+                              "currency": {
+                                "type": "string",
+                                "example": "KWD"
+                              },
+                              "amount": {
+                                "type": "integer",
+                                "example": 1,
+                                "default": 0
+                              },
+                              "remarks": {
+                                "type": "string",
+                                "example": "charge - created"
+                              }
+                            }
+                          }
+                        },
+                        "auto_reversed": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "payment_agreement": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "payment_agreement_TS07A4620230032t4K21406294"
+                            },
+                            "total_payments_count": {
+                              "type": "integer",
+                              "example": 1,
+                              "default": 0
+                            },
+                            "contract": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "example": "card_YOh6102321312TNL13qE5C584"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "example": "UNSCHEDULED"
+                                }
+                              }
+                            },
+                            "variable_amount": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "example": "variable_amount_TS07A4620230032Ra9k1406294"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n\t\"errors\": [\n\t\t{\n\t\t\t\"code\": \"1125\",\n\t\t\t\"description\": \"We were unable to process your payment. Please verify your payment method or card details and try again.\"\n\t\t}\n\t]\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "example": "1125"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "We were unable to process your payment. Please verify your payment method or card details and try again."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/{charge_id}": {
+      "get": {
+        "summary": "Retrieve a Charge",
+        "description": "This endpoint retrieves the details of a charge that was previously created.",
+        "operationId": "retrieve-a-charges",
+        "parameters": [
+          {
+            "name": "charge_id",
+            "in": "path",
+            "description": "The unique ``charge.id`` that was returned from your previous charge request.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n\t\"id\": \"chg_TS050120220958Bk240709704\",\n\t\"object\": \"charge\",\n\t\"live_mode\": false,\n\t\"api_version\": \"V2\",\n\t\"method\": \"GET\",\n\t\"status\": \"CAPTURED\",\n\t\"amount\": 1.000,\n\t\"currency\": \"KWD\",\n\t\"threeDSecure\": false,\n\t\"card_threeDSecure\": false,\n\t\"save_card\": false,\n\t\"merchant_id\": \"\",\n\t\"product\": \"GOSELL\",\n\t\"description\": \"Test Description\",\n\t\"metadata\": {\n\t\t\"udf1\": \"Metadata 1\"\n\t},\n\t\"transaction\": {\n\t\t\"authorization_id\": \"321387\",\n\t\t\"timezone\": \"UTC+03:00\",\n\t\t\"created\": \"1662544753039\",\n\t\t\"expiry\": {\n\t\t\t\"period\": 30,\n\t\t\t\"type\": \"MINUTE\"\n\t\t},\n\t\t\"asynchronous\": false,\n\t\t\"amount\": 1.030,\n\t\t\"currency\": \"KWD\"\n\t},\n\t\"reference\": {\n\t\t\"track\": \"tck_TS050120220958Xx440709704\",\n\t\t\"payment\": \"1707220958097045920\",\n\t\t\"gateway\": \"123456789\",\n\t\t\"acquirer\": \"225006321387\",\n\t\t\"transaction\": \"txn_01\",\n\t\t\"order\": \"ord_01\"\n\t},\n\t\"response\": {\n\t\t\"code\": \"000\",\n\t\t\"message\": \"Captured\"\n\t},\n\t\"acquirer\": {\n\t\t\"response\": {\n\t\t\t\"code\": \"00\",\n\t\t\t\"message\": \"Approved\"\n\t\t}\n\t},\n\t\"gateway\": {\n\t\t\"response\": {\n\t\t\t\"code\": \"0\",\n\t\t\t\"message\": \"Transaction Approved\"\n\t\t}\n\t},\n\t\"card\": {\n\t\t\"object\": \"card\",\n\t\t\"first_six\": \"511111\",\n\t\t\"scheme\": \"MASTERCARD\",\n\t\t\"brand\": \"MASTERCARD\",\n\t\t\"type\": \"DEBIT\",\n\t\t\"category\": \"STANDARD\",\n\t\t\"last_four\": \"1118\"\n\t},\n\t\"receipt\": {\n\t\t\"id\": \"202007220958092921\",\n\t\t\"email\": true,\n\t\t\"sms\": true\n\t},\n\t\"customer\": {\n\t\t\"id\": \"cus_TS051320220959Di9e0709722\",\n\t\t\"first_name\": \"test\",\n\t\t\"last_name\": \"test\",\n\t\t\"email\": \"test@test.com\",\n\t\t\"phone\": {\n\t\t\t\"country_code\": \"965\",\n\t\t\t\"number\": \"51234567\"\n\t\t}\n\t},\n\t\"merchant\": {\n\t\t\"country\": \"KW\",\n\t\t\"currency\": \"KWD\",\n\t\t\"id\": \"599424\"\n\t},\n\t\"source\": {\n\t\t\"object\": \"token\",\n\t\t\"type\": \"CARD_NOT_PRESENT\",\n\t\t\"payment_type\": \"DEBIT\",\n\t\t\"payment_method\": \"MASTERCARD\",\n\t\t\"channel\": \"INTERNET\",\n\t\t\"id\": \"tok_Xx1e922659l00Z7gI8b577\"\n\t},\n\t\"redirect\": {\n\t\t\"status\": \"SUCCESS\",\n\t\t\"url\": \"http://your_website.com/redirect_url\"\n\t},\n\t\"post\": {\n\t\t\"status\": \"SUCCESS\",\n\t\t\"url\": \"http://your_website.com/post_url\"\n\t},\n\t\"issuer\": {\n\t\t\"id\": \"bnk_TS052820221011q2O50709262\",\n\t\t\"name\": \"U.S. BANK, N.A.\",\n\t\t\"country\": \"US\",\n\t\t\"region\": \"global\"\n\t},\n\t\"activities\": [\n\t\t{\n\t\t\t\"id\": \"activity_TS061320220959h2J50709738\",\n\t\t\t\"object\": \"activity\",\n\t\t\t\"created\": 1662544753039,\n\t\t\t\"status\": \"INITIATED\",\n\t\t\t\"currency\": \"KWD\",\n\t\t\t\"amount\": 1.000,\n\t\t\t\"remarks\": \"charge - created\"\n\t\t},\n\t\t{\n\t\t\t\"id\": \"activity_TS071520220959Rg120709744\",\n\t\t\t\"object\": \"activity\",\n\t\t\t\"created\": 1662544755744,\n\t\t\t\"status\": \"CAPTURED\",\n\t\t\t\"currency\": \"KWD\",\n\t\t\t\"amount\": 1.030,\n\t\t\t\"remarks\": \"charge - captured\"\n\t\t}\n\t],\n\t\"auto_reversed\": false\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "chg_TS050120220958Bk240709704"
+                    },
+                    "object": {
+                      "type": "string",
+                      "example": "charge"
+                    },
+                    "live_mode": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    },
+                    "api_version": {
+                      "type": "string",
+                      "example": "V2"
+                    },
+                    "method": {
+                      "type": "string",
+                      "example": "GET"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "CAPTURED"
+                    },
+                    "amount": {
+                      "type": "integer",
+                      "example": 1,
+                      "default": 0
+                    },
+                    "currency": {
+                      "type": "string",
+                      "example": "KWD"
+                    },
+                    "threeDSecure": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    },
+                    "card_threeDSecure": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    },
+                    "save_card": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    },
+                    "merchant_id": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "product": {
+                      "type": "string",
+                      "example": "GOSELL"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Test Description"
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "udf1": {
+                          "type": "string",
+                          "example": "Metadata 1"
+                        }
+                      }
+                    },
+                    "transaction": {
+                      "type": "object",
+                      "properties": {
+                        "authorization_id": {
+                          "type": "string",
+                          "example": "321387"
+                        },
+                        "timezone": {
+                          "type": "string",
+                          "example": "UTC+03:00"
+                        },
+                        "created": {
+                          "type": "string",
+                          "example": "1662544753039"
+                        },
+                        "expiry": {
+                          "type": "object",
+                          "properties": {
+                            "period": {
+                              "type": "integer",
+                              "example": 30,
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "example": "MINUTE"
+                            }
+                          }
+                        },
+                        "asynchronous": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 1.03,
+                          "default": 0
+                        },
+                        "currency": {
+                          "type": "string",
+                          "example": "KWD"
+                        }
+                      }
+                    },
+                    "reference": {
+                      "type": "object",
+                      "properties": {
+                        "track": {
+                          "type": "string",
+                          "example": "tck_TS050120220958Xx440709704"
+                        },
+                        "payment": {
+                          "type": "string",
+                          "example": "1707220958097045920"
+                        },
+                        "gateway": {
+                          "type": "string",
+                          "example": "123456789"
+                        },
+                        "acquirer": {
+                          "type": "string",
+                          "example": "225006321387"
+                        },
+                        "transaction": {
+                          "type": "string",
+                          "example": "txn_01"
+                        },
+                        "order": {
+                          "type": "string",
+                          "example": "ord_01"
+                        }
+                      }
+                    },
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "example": "000"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Captured"
+                        }
+                      }
+                    },
+                    "acquirer": {
+                      "type": "object",
+                      "properties": {
+                        "response": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "string",
+                              "example": "00"
+                            },
+                            "message": {
+                              "type": "string",
+                              "example": "Approved"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "gateway": {
+                      "type": "object",
+                      "properties": {
+                        "response": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "string",
+                              "example": "0"
+                            },
+                            "message": {
+                              "type": "string",
+                              "example": "Transaction Approved"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "card": {
+                      "type": "object",
+                      "properties": {
+                        "object": {
+                          "type": "string",
+                          "example": "card"
+                        },
+                        "first_six": {
+                          "type": "string",
+                          "example": "511111"
+                        },
+                        "scheme": {
+                          "type": "string",
+                          "example": "MASTERCARD"
+                        },
+                        "brand": {
+                          "type": "string",
+                          "example": "MASTERCARD"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "DEBIT"
+                        },
+                        "category": {
+                          "type": "string",
+                          "example": "STANDARD"
+                        },
+                        "last_four": {
+                          "type": "string",
+                          "example": "1118"
+                        }
+                      }
+                    },
+                    "receipt": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "202007220958092921"
+                        },
+                        "email": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "sms": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        }
+                      }
+                    },
+                    "customer": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "cus_TS051320220959Di9e0709722"
+                        },
+                        "first_name": {
+                          "type": "string",
+                          "example": "test"
+                        },
+                        "last_name": {
+                          "type": "string",
+                          "example": "test"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "test@test.com"
+                        },
+                        "phone": {
+                          "type": "object",
+                          "properties": {
+                            "country_code": {
+                              "type": "string",
+                              "example": "965"
+                            },
+                            "number": {
+                              "type": "string",
+                              "example": "51234567"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "merchant": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "KW"
+                        },
+                        "currency": {
+                          "type": "string",
+                          "example": "KWD"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "599424"
+                        }
+                      }
+                    },
+                    "source": {
+                      "type": "object",
+                      "properties": {
+                        "object": {
+                          "type": "string",
+                          "example": "token"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "CARD_NOT_PRESENT"
+                        },
+                        "payment_type": {
+                          "type": "string",
+                          "example": "DEBIT"
+                        },
+                        "payment_method": {
+                          "type": "string",
+                          "example": "MASTERCARD"
+                        },
+                        "channel": {
+                          "type": "string",
+                          "example": "INTERNET"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "tok_Xx1e922659l00Z7gI8b577"
+                        }
+                      }
+                    },
+                    "redirect": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "SUCCESS"
+                        },
+                        "url": {
+                          "type": "string",
+                          "example": "http://your_website.com/redirect_url"
+                        }
+                      }
+                    },
+                    "post": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "SUCCESS"
+                        },
+                        "url": {
+                          "type": "string",
+                          "example": "http://your_website.com/post_url"
+                        }
+                      }
+                    },
+                    "issuer": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "bnk_TS052820221011q2O50709262"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "U.S. BANK, N.A."
+                        },
+                        "country": {
+                          "type": "string",
+                          "example": "US"
+                        },
+                        "region": {
+                          "type": "string",
+                          "example": "global"
+                        }
+                      }
+                    },
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "activity_TS061320220959h2J50709738"
+                          },
+                          "object": {
+                            "type": "string",
+                            "example": "activity"
+                          },
+                          "created": {
+                            "type": "integer",
+                            "example": 1662544753039,
+                            "default": 0
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "INITIATED"
+                          },
+                          "currency": {
+                            "type": "string",
+                            "example": "KWD"
+                          },
+                          "amount": {
+                            "type": "integer",
+                            "example": 1,
+                            "default": 0
+                          },
+                          "remarks": {
+                            "type": "string",
+                            "example": "charge - created"
+                          }
+                        }
+                      }
+                    },
+                    "auto_reversed": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "summary": "Update a Charge",
+        "description": "This endpoint updates the required details for a specified charge.",
+        "operationId": "update-a-charge",
+        "parameters": [
+          {
+            "name": "charge_id",
+            "in": "path",
+            "description": "The unique ``charge.id`` that was returned from your previous charge request.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "An arbitrary string which you can attach to a charge object. It is displayed in the web interface alongside the charge.",
+                    "default": "Test Description"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "description": "Any additional information that the merchant wants to attach to the charge object.",
+                    "properties": {
+                      "udf1": {
+                        "type": "string",
+                        "description": "Merchant can define new parameters (key/value pairs) within this metadata object.",
+                        "default": "Metadata 1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  \"id\": \"chg_TS050120220958Bk240709704\",\n  \"object\": \"charge\",\n  \"live_mode\": false,\n  \"api_version\": \"V2\",\n  \"method\": \"UPDATE\",\n  \"status\": \"CAPTURED\",\n  \"amount\": 1,\n  \"currency\": \"KWD\",\n  \"threeDSecure\": false,\n  \"card_threeDSecure\": false,\n  \"save_card\": false,\n  \"merchant_id\": \"\",\n  \"product\": \"GOSELL\",\n  \"description\": \"Test Description\",\n  \"metadata\": {\n    \"udf1\": \"Metadata 1\"\n  },\n  \"transaction\": {\n    \"authorization_id\": \"321387\",\n    \"timezone\": \"UTC+03:00\",\n    \"created\": \"1662544753039\",\n    \"expiry\": {\n      \"period\": 30,\n      \"type\": \"MINUTE\"\n    },\n    \"asynchronous\": false,\n    \"amount\": 1.03,\n    \"currency\": \"KWD\"\n  },\n  \"reference\": {\n    \"track\": \"tck_TS050120220958Xx440709704\",\n    \"payment\": \"1707220958097045920\",\n    \"gateway\": \"123456789\",\n    \"acquirer\": \"225006321387\",\n    \"transaction\": \"txn_01\",\n    \"order\": \"ord_01\"\n  },\n  \"response\": {\n    \"code\": \"000\",\n    \"message\": \"Captured\"\n  },\n  \"acquirer\": {\n    \"response\": {\n      \"code\": \"00\",\n      \"message\": \"Approved\"\n    }\n  },\n  \"gateway\": {\n    \"response\": {\n      \"code\": \"0\",\n      \"message\": \"Transaction Approved\"\n    }\n  },\n  \"card\": {\n    \"object\": \"card\",\n    \"first_six\": \"511111\",\n    \"scheme\": \"MASTERCARD\",\n    \"brand\": \"MASTERCARD\",\n    \"last_four\": \"1118\"\n  },\n  \"receipt\": {\n    \"id\": \"202007220958092921\",\n    \"email\": true,\n    \"sms\": true\n  },\n  \"customer\": {\n    \"id\": \"cus_TS051320220959Di9e0709722\",\n    \"first_name\": \"test\",\n    \"last_name\": \"test\",\n    \"email\": \"test@test.com\",\n    \"phone\": {\n      \"country_code\": \"965\",\n      \"number\": \"51234567\"\n    }\n  },\n  \"merchant\": {\n    \"country\": \"KW\",\n    \"currency\": \"KWD\",\n    \"id\": \"599424\"\n  },\n  \"source\": {\n    \"object\": \"token\",\n    \"type\": \"CARD_NOT_PRESENT\",\n    \"payment_type\": \"DEBIT\",\n    \"payment_method\": \"MASTERCARD\",\n    \"channel\": \"INTERNET\",\n    \"id\": \"tok_Xx1e922659l00Z7gI8b577\"\n  },\n  \"redirect\": {\n    \"status\": \"SUCCESS\",\n    \"url\": \"http://your_website.com/redirect_url\"\n  },\n  \"post\": {\n    \"status\": \"SUCCESS\",\n    \"url\": \"https://eo9y4shdh3frsms.m.pipedream.net\"\n  },\n  \"activities\": [\n    {\n      \"id\": \"activity_TS061320220959h2J50709738\",\n      \"object\": \"activity\",\n      \"created\": 1662544753039,\n      \"status\": \"INITIATED\",\n      \"currency\": \"KWD\",\n      \"amount\": 1,\n      \"remarks\": \"charge - created\"\n    },\n    {\n      \"id\": \"activity_TS071520220959Rg120709744\",\n      \"object\": \"activity\",\n      \"created\": 1662544755744,\n      \"status\": \"CAPTURED\",\n      \"currency\": \"KWD\",\n      \"amount\": 1.03,\n      \"remarks\": \"charge - captured\"\n    }\n  ],\n  \"auto_reversed\": false\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "chg_TS050120220958Bk240709704"
+                    },
+                    "object": {
+                      "type": "string",
+                      "example": "charge"
+                    },
+                    "live_mode": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    },
+                    "api_version": {
+                      "type": "string",
+                      "example": "V2"
+                    },
+                    "method": {
+                      "type": "string",
+                      "example": "UPDATE"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "CAPTURED"
+                    },
+                    "amount": {
+                      "type": "integer",
+                      "example": 1,
+                      "default": 0
+                    },
+                    "currency": {
+                      "type": "string",
+                      "example": "KWD"
+                    },
+                    "threeDSecure": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    },
+                    "card_threeDSecure": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    },
+                    "save_card": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    },
+                    "merchant_id": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "product": {
+                      "type": "string",
+                      "example": "GOSELL"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Test Description"
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "udf1": {
+                          "type": "string",
+                          "example": "Metadata 1"
+                        }
+                      }
+                    },
+                    "transaction": {
+                      "type": "object",
+                      "properties": {
+                        "authorization_id": {
+                          "type": "string",
+                          "example": "321387"
+                        },
+                        "timezone": {
+                          "type": "string",
+                          "example": "UTC+03:00"
+                        },
+                        "created": {
+                          "type": "string",
+                          "example": "1662544753039"
+                        },
+                        "expiry": {
+                          "type": "object",
+                          "properties": {
+                            "period": {
+                              "type": "integer",
+                              "example": 30,
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "example": "MINUTE"
+                            }
+                          }
+                        },
+                        "asynchronous": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 1.03,
+                          "default": 0
+                        },
+                        "currency": {
+                          "type": "string",
+                          "example": "KWD"
+                        }
+                      }
+                    },
+                    "reference": {
+                      "type": "object",
+                      "properties": {
+                        "track": {
+                          "type": "string",
+                          "example": "tck_TS050120220958Xx440709704"
+                        },
+                        "payment": {
+                          "type": "string",
+                          "example": "1707220958097045920"
+                        },
+                        "gateway": {
+                          "type": "string",
+                          "example": "123456789"
+                        },
+                        "acquirer": {
+                          "type": "string",
+                          "example": "225006321387"
+                        },
+                        "transaction": {
+                          "type": "string",
+                          "example": "txn_01"
+                        },
+                        "order": {
+                          "type": "string",
+                          "example": "ord_01"
+                        }
+                      }
+                    },
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "example": "000"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Captured"
+                        }
+                      }
+                    },
+                    "acquirer": {
+                      "type": "object",
+                      "properties": {
+                        "response": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "string",
+                              "example": "00"
+                            },
+                            "message": {
+                              "type": "string",
+                              "example": "Approved"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "gateway": {
+                      "type": "object",
+                      "properties": {
+                        "response": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "string",
+                              "example": "0"
+                            },
+                            "message": {
+                              "type": "string",
+                              "example": "Transaction Approved"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "card": {
+                      "type": "object",
+                      "properties": {
+                        "object": {
+                          "type": "string",
+                          "example": "card"
+                        },
+                        "first_six": {
+                          "type": "string",
+                          "example": "511111"
+                        },
+                        "scheme": {
+                          "type": "string",
+                          "example": "MASTERCARD"
+                        },
+                        "brand": {
+                          "type": "string",
+                          "example": "MASTERCARD"
+                        },
+                        "last_four": {
+                          "type": "string",
+                          "example": "1118"
+                        }
+                      }
+                    },
+                    "receipt": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "202007220958092921"
+                        },
+                        "email": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "sms": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        }
+                      }
+                    },
+                    "customer": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "cus_TS051320220959Di9e0709722"
+                        },
+                        "first_name": {
+                          "type": "string",
+                          "example": "test"
+                        },
+                        "last_name": {
+                          "type": "string",
+                          "example": "test"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "test@test.com"
+                        },
+                        "phone": {
+                          "type": "object",
+                          "properties": {
+                            "country_code": {
+                              "type": "string",
+                              "example": "965"
+                            },
+                            "number": {
+                              "type": "string",
+                              "example": "51234567"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "merchant": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "KW"
+                        },
+                        "currency": {
+                          "type": "string",
+                          "example": "KWD"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "599424"
+                        }
+                      }
+                    },
+                    "source": {
+                      "type": "object",
+                      "properties": {
+                        "object": {
+                          "type": "string",
+                          "example": "token"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "CARD_NOT_PRESENT"
+                        },
+                        "payment_type": {
+                          "type": "string",
+                          "example": "DEBIT"
+                        },
+                        "payment_method": {
+                          "type": "string",
+                          "example": "MASTERCARD"
+                        },
+                        "channel": {
+                          "type": "string",
+                          "example": "INTERNET"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "tok_Xx1e922659l00Z7gI8b577"
+                        }
+                      }
+                    },
+                    "redirect": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "SUCCESS"
+                        },
+                        "url": {
+                          "type": "string",
+                          "example": "http://your_website.com/redirect_url"
+                        }
+                      }
+                    },
+                    "post": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "SUCCESS"
+                        },
+                        "url": {
+                          "type": "string",
+                          "example": "https://eo9y4shdh3frsms.m.pipedream.net"
+                        }
+                      }
+                    },
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "activity_TS061320220959h2J50709738"
+                          },
+                          "object": {
+                            "type": "string",
+                            "example": "activity"
+                          },
+                          "created": {
+                            "type": "integer",
+                            "example": 1662544753039,
+                            "default": 0
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "INITIATED"
+                          },
+                          "currency": {
+                            "type": "string",
+                            "example": "KWD"
+                          },
+                          "amount": {
+                            "type": "integer",
+                            "example": 1,
+                            "default": 0
+                          },
+                          "remarks": {
+                            "type": "string",
+                            "example": "charge - created"
+                          }
+                        }
+                      }
+                    },
+                    "auto_reversed": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  \"errors\": [\n    {\n      \"code\": \"1144\",\n      \"description\": \"Charge not found\"\n    }\n  ]\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "example": "1144"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "Charge not found"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/download": {
+      "post": {
+        "summary": "Download Charges",
+        "description": "This endpoint allows you to retrieve a list of charges with detailed information for each charge. The response returned can be saved in a CSV file. Each row represents a charge with its respective details, and the first row contains the headers describing each field.",
+        "operationId": "download-charges",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "period": {
+                    "type": "object",
+                    "description": "Retrieve charges for a selected period",
+                    "properties": {
+                      "date": {
+                        "type": "object",
+                        "description": "From and to date range (charge created date), Measured in Unix epoch time (milliseconds).",
+                        "properties": {
+                          "from": {
+                            "type": "string",
+                            "description": "From date (charge created date), Measured in Unix Epoch Timestamp (milliseconds).",
+                            "default": "1662190768000"
+                          },
+                          "to": {
+                            "type": "string",
+                            "description": "To date (charge created date), Measured in Unix Epoch Timestamp (milliseconds).",
+                            "default": "1662536368000"
+                          }
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "This parameter defines the different transaction states or statuses that can be queried or filtered within the system. The following are the accepted values and their corresponding meanings:  CHARGE: When this value is used, the API will retrieve all charges that have been initiated or requested by the user.  POST: Selecting this value will fetch charges that have been successfully posted or processed to the Settlement system for further processing.  SETTLED: This value will retrieve matured transactions, where the transaction amount has been settled and credited to the Tap wallet.  PAID_OUT: When using this value, the API will return charges that have been successfully paid out to the respective bank or financial institution.  By specifying one of these accepted values as a parameter, the API can be used to fetch specific sets of transactions based on their current state or status in the system.",
+                        "default": "1"
+                      }
+                    }
+                  },
+                  "merchants": {
+                    "type": "array",
+                    "description": "List of merchant IDs for which the charges are being queried",
+                    "default": [
+                      "599242"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "payouts": {
+                    "type": "object",
+                    "description": "Retrieve charges based on payouts",
+                    "properties": {
+                      "payout_id": {
+                        "type": "array",
+                        "description": "Array of payouts (you can specify the list of Payouts ID's to retrieve).",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "payout_reference": {
+                        "type": "array",
+                        "description": "Array of payouts references(you can specify the list of Payouts references's to retrieve).",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Retrieve the selected list of charges info by charge status. Values can be: INITIATED, IN_PROGRESS, ABANDONED, CANCELLED, FAILED, DECLINED, RESTRICTED, CAPTURED, VOID, TIMEDOUT or UNKNOWN"
+                  },
+                  "sources": {
+                    "type": "array",
+                    "description": "Array of sources (you can specify the list of Source ID's to retrieve).",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "payment_methods": {
+                    "type": "array",
+                    "description": "Array of payment methods (you can specify the list of payment method Source ID's to retrieve).",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "customers": {
+                    "type": "array",
+                    "description": "Array of customers (you can specify the list of Customer ID's to retrieve).",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "charges": {
+                    "type": "array",
+                    "description": "Array of charges (you can specify the list of Source ID's to retrieve).",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "starting_after": {
+                    "type": "string",
+                    "description": "A cursor for use in pagination. The starting_after parameter takes a charge ID that determines your position in the list. For example, if your list request returns 50 charges that end with cus_foo, you can use starting_after=cus_foo in your next call to retrieve the next page of the list."
+                  },
+                  "charge_created": {
+                    "type": "string",
+                    "description": "Created date (charge created date), Measured in Unix Epoch Timestamp (milliseconds)."
+                  },
+                  "mobile": {
+                    "type": "string",
+                    "description": "Filter the results based on customer mobile number"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "filter the results based on customer email"
+                  },
+                  "limit": {
+                    "type": "string",
+                    "description": "The maximum number of charges to return in a single call. Default: 25; Maximum: 50."
+                  },
+                  "order": {
+                    "type": "string",
+                    "description": "Sort the results Ascending or Descending by date"
+                  },
+                  "order_by": {
+                    "type": "string",
+                    "description": "Defaults to date"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "description": "Filter the results based on meta data values",
+                    "properties": {
+                      "udf1": {
+                        "type": "string",
+                        "description": "Merchant can define new parameters (key/value pairs) within this metadata object.",
+                        "default": "Metadata 1"
+                      }
+                    }
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Filter the charges based on charge currency"
+                  },
+                  "reference": {
+                    "type": "object",
+                    "properties": {
+                      "transaction": {
+                        "type": "string",
+                        "description": "The transaction reference number provided by the Merchant.",
+                        "default": "txn_01"
+                      },
+                      "order": {
+                        "type": "string",
+                        "description": "The order reference number provided by the Merchant.",
+                        "default": "ord_01"
+                      },
+                      "idempotent": {
+                        "type": "string",
+                        "description": "The idempotent string to restrict duplicate payments. If the same idempotent string is passed, a new charge will not be initiated, whereas the response of the first charge will be returned."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": "payout_id,settlement_id,charge_id,currency,amount,status,authorization_id,status_code,status_message,gateway_code,gateway_message,issuer_code,issuer_message,charge_date,capture_date,post_date,settlement_date,payout_date,track_id,reference_gateway,reference_acquirer,reference_transaction,reference_order,receipt,customer_id,customer_name,customer_phone_code,customer_phone,customer_email,first_eight,last_four,issuer_country,payment_method,payment_scheme,payment_type,merchant_id,product,post_currency,post_amount,fee,fee_vat,net_amount,metadata_1,metadata_2,metadata_3,metadata_4,metadata_5\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 12:43 AM,28/07/2024 12:44 AM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,VISA,CREDIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 10:33 AM,28/07/2024 10:35 AM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,MASTERCARD,MASTERCARD,CREDIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 11:50 AM,28/07/2024 11:52 AM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,MASTERCARD,DEBIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 11:58 AM,28/07/2024 11:59 AM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,VISA,VISA,CREDIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 12:02 PM,28/07/2024 12:03 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,VISA,DEBIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 12:12 PM,28/07/2024 12:13 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,VISA,CREDIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 12:16 PM,28/07/2024 12:16 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,VISA,DEBIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 01:38 PM,28/07/2024 01:38 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,VISA,CREDIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 02:50 PM,28/07/2024 02:50 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,MASTERCARD,DEBIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 02:57 PM,28/07/2024 02:57 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,VISA,CREDIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,160.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 03:00 PM,28/07/2024 03:00 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,VISA,CREDIT,599242,GOSELL,AED,160.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,200.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 06:25 PM,28/07/2024 06:26 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,VISA,DEBIT,599242,GOSELL,AED,200.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,950.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 06:28 PM,28/07/2024 06:28 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,VISA,CREDIT,599242,GOSELL,AED,950.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,160.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 07:39 PM,28/07/2024 07:39 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,MASTERCARD,DEBIT,599242,GOSELL,AED,160.000,xxx,0.000,xxx,,,,,\npayout_xxxx,settlement_xxxx,chg_xxxx,AED,160.000,CAPTURED,xxxx,\"000 \",Captured,\"0 \",Transaction Approved,\"00 \",Approved,28/07/2024 07:41 PM,28/07/2024 07:42 PM,28/07/2024,04/08/2024,04/08/2024,tck_xxxx,\"xxxx\",xxxx,\"xxxx-xxxx-xxxx-xxx\",\"xxxx-xxxx-xxxx-xxxx\",\"xxxx\",cus_xxxx,John Doe,965,\"xxxxx\",test@hotmail.com,xxxxxx,xxxx,QA,APPLE_PAY,MASTERCARD,DEBIT,599242,GOSELL,AED,160.000,xxx,0.000,xxx,,,,,"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "x-readme": {
+    "headers": []
+  },
+  "x-readme-fauxas": true
+}

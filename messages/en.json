@@ -78,7 +78,9 @@
     "featureComing": "This feature is to be completed in v2"
   }, 
   "Login": {
-    "title": "Sign in",
+    "title": "Hi, Welcome Back 👋",
+    "subtile":"Hello again, you've been missed!",
+    "enter-credentials":"Enter your credentials",
     "noAccount": "Don't have an account?",
     "signUp": "Sign up",
     "emailLabel": "Email",
@@ -91,7 +93,10 @@
   },  
 
     "Signup": {
-      "title": "Sign up",
+      "title": "Create An Account",
+      "subtitle":"Manage your properties with ease",
+      "enter-credentials":"Enter your credentials",
+
       "alreadyHaveAccount": "Already have an account?",
       "signIn": "Sign in",
       "emailLabel": "Email",
@@ -198,7 +203,224 @@
     "deleteWarning": "This action cannot be undone. This will permanently delete the booking.",
     "cancel": "Cancel", 
     "delete": "Delete"
+  },
+  
+    "Hero": {
+      "new": "New",
+      "featuresLive": "Features are live now!",
+      "welcome": "Welcome to",
+      "perfectStay": " - Your Perfect Stay Awaits",
+      "description": "Find and manage properties effortlessly. Whether you're booking a stay or listing your space, MyBnb makes it seamless and stress-free.",
+      "getStarted": "Get Started",
+      "propertyShowcase": "Property Showcase",
+      "benefits": "Benefits",
+      "shortcutSuccess": "Your Shortcut to Success",
+      "benefitsDescription": "Discover how MyBnb can help you maximize your property’s potential and streamline your rental experience.",
+      "buildTrust": "Build Guest Trust",
+      "trustDescription": "Enhance credibility with verified listings, transparent pricing, and guest reviews.",
+      "moreLeads": "Increase Bookings",
+      "leadsDescription": "Expand your reach and attract more guests with our optimized listing tools.",
+      "higherConversions": "Maximize Profits",
+      "conversionsDescription": "Optimize your rental income with dynamic pricing and efficient property management.",
+      "testIdeas": "Optimize Your Listings",
+      "ideasDescription": "Experiment with different pricing strategies and amenities to see what works best for your guests."
+    },   
+
+    "Benefits": {
+      "benefits": "Benefits",
+      "shortcutSuccess": "Your Shortcut to Success",
+      "benefitsDescription": "Optimize your property management and maximize revenue with MyBnb.",
+      "manageProperties": "Effortless Property Management",
+      "managePropertiesDescription": "Easily manage your listings, bookings, and pricing in one place.",
+      "increaseGuestSatisfaction": "Enhance Guest Experience",
+      "increaseGuestSatisfactionDescription": "Provide top-notch service with automated communication and seamless check-ins.",
+      "boostRevenue": "Maximize Your Earnings",
+      "boostRevenueDescription": "Use dynamic pricing and market insights to increase your rental income.",
+      "streamlineOperations": "Automate & Simplify Operations",
+      "streamlineOperationsDescription": "Reduce manual work with smart automation for maintenance and guest management."
+    },
+    "Community": {
+      "join": "Ready to join the",
+      "community": "MyBnb Community?",
+      "description": "Connect with other property owners and hosts to share insights, learn best practices, and grow your rental business together. Join our exclusive community for expert tips and support!",
+      "cta": "Join Now"
+    },
+    "Contact": {
+      "heading": "Get in Touch",
+      "title": "Connect With MyBnb",
+      "description": "Have questions about property management or partnership opportunities? Contact us today!",
+      "location": { "title": "Our Office", "details": "742 Evergreen Terrace, Springfield, IL 62704" },
+      "phone": { "title": "Call Us", "details": "+1 (619) 123-4567" },
+      "email": { "title": "Email Us", "details": "support@mybnb.com" },
+      "hours": { "title": "Business Hours", "weekdays": "Monday - Friday", "timing": "8AM - 4PM" },
+      "form": {
+        "title": "Send a Message",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "subject": "Subject",
+        "subjectGeneral": "General Inquiry",
+        "subjectPartnership": "Partnership",
+        "subjectProperty": "Property Management",
+        "message": "Message",
+        "submit": "Send Message"
+      }
+    },
+
+    "FAQ": {
+      "title": "FAQs",
+      "heading": "Common Questions",
+      "q1": "How can I manage my property on MyBnb?",
+      "a1": "Simply sign up, provide, your details, property details, set pricing, and publish your listing.",
+      "q2": "What fees does MyBnb charge?",
+      "a2": "We charge a small duration servicefee and you have accessto al our apps features.  ",
+      "q3": "How do I pay for subscription?",
+      "a3": "Payments are processed securely using your preferred payment method.",
+      "q4": "What happens if i want to cancels my subsription?",
+      "a4": "Our flexible cancellation policies allow you to cancel subscription easily and effortlessly.",
+      "q5": "Is MyBnb available internationally?",
+      "a5": "Yes, we support bussiness properties and travelers worldwide!"
+    },
+    "Features": {
+      "title": "Features",
+      "heading": "What Makes MyBnb Unique",
+      "subheading": "Discover how MyBnb simplifies property rentals for hosts and enhances guest experiences.",
+      "f1_title": "Seamless Property Listings",
+      "f1_desc": "Easily list your property with a user-friendly interface and advanced customization options.",
+      "f2_title": "Global Reach",
+      "f2_desc": "Connect with travelers from all over the world, expanding your hosting opportunities.",
+      "f3_title": "Flexible Booking System",
+      "f3_desc": "Control your availability, set pricing, and manage bookings effortlessly.",
+      "f4_title": "Secure Payments",
+      "f4_desc": "Receive payments safely through our secure and fast payment processing system.",
+      "f5_title": "Community & Support",
+      "f5_desc": "Join a growing host community and access 24/7 support for a smooth experience.",
+      "f6_title": "Trust & Safety",
+      "f6_desc": "We prioritize safety with verified guests, secure transactions, and fraud protection."
+    },
+
+    "Footer": {
+    "contact_title": "Contact",
+    "contact_support": "Customer Support",
+    "contact_partners": "Become a Partner",
+    "contact_careers": "Careers",
+    "platforms_title": "Platforms",
+    "help_title": "Help",
+    "help_faq": "FAQ",
+    "help_support": "Support Center",
+    "help_policy": "Privacy Policy",
+    "socials_title": "Socials",
+    "copyright": "Designed and developed by"
+  },
+  "Pricing": {
+    "title": "Pricing",
+    "subtitle": "Get unlimited access",
+    "description": "Choose a plan that fits your needs and start hosting or booking today.",
+    "month": "month",
+    "free": {
+      "title": "Free",
+      "description": "Perfect for exploring our platform.",
+      "button": "Start Free Trial",
+      "benefit_1": "1 listing",
+      "benefit_2": "Basic support",
+      "benefit_3": "Community access",
+      "benefit_4": "Limited booking requests",
+      "benefit_5": "Standard verification"
+    },
+    "premium": {
+      "title": "Premium",
+      "description": "Unlock more features and grow your business.",
+      "button": "Get Started",
+      "benefit_1": "5 listings",
+      "benefit_2": "Priority support",
+      "benefit_3": "Enhanced visibility",
+      "benefit_4": "Unlimited booking requests",
+      "benefit_5": "Advanced verification"
+    },
+    "enterprise": {
+      "title": "Enterprise",
+      "description": "For large property managers and businesses.",
+      "button": "Contact Us",
+      "benefit_1": "Unlimited listings",
+      "benefit_2": "Dedicated account manager",
+      "benefit_3": "Premium marketing tools",
+      "benefit_4": "Phone & email support",
+      "benefit_5": "Custom branding"
+    }
+  },
+  "Services": { 
+    "title": "Our Services",
+    "subtitle": "Enhance Your Hosting Experience",
+    "description": "We provide tools and services to help you grow your rental business, attract more guests, and optimize your operations.",
+    "custom_domain": {
+      "title": "Custom Domain Integration",
+      "description": "Use your own domain for a professional and branded rental experience."
+    },
+    "social_media": {
+      "title": "Social Media Integrations",
+      "description": "Easily connect your listings to social media for wider reach."
+    },
+    "email_marketing": {
+      "title": "Email Marketing Integrations",
+      "description": "Automate and personalize guest communications to increase bookings."
+    },
+    "seo_optimization": {
+      "title": "SEO Optimization",
+      "description": "Boost your property's visibility with SEO-friendly listings."
+    }
+  },
+  "Sponsors": {
+    "title": "Our Trusted Partners",
+    "hostly": "Hostly",
+    "staypro": "StayPro",
+    "luxbnb": "LuxBnB",
+    "homescape": "HomeScape",
+    "rentwise": "RentWise",
+    "airstay": "AirStay",
+    "globetrot": "Globetrot"
+  },
+
+  "Navbar": {
+    "explore": "Explore",
+    "how_it_works": "How It Works",
+    "become_host": "Become a Host",
+    "faq": "FAQ",
+    "features": "Features",
+    "feature_listings": "Unique Stays",
+    "feature_listings_desc": "Find handpicked, one-of-a-kind stays worldwide.",
+    "feature_experiences": "Curated Experiences",
+    "feature_experiences_desc": "Enjoy immersive local activities.",
+    "feature_trust": "Secure & Trusted",
+    "feature_trust_desc": "Verified hosts and secure payments."
+  },
+  "Testimonials": {
+    "title": "Testimonials",
+    "subtitle": "Hear What Our Guests & Hosts Say",
+    "titles": {
+      "host": "Superhost",
+      "traveler": "Frequent Traveler",
+      "property_owner": "Property Owner",
+      "frequent_traveler": "Luxury Traveler"
+    },
+    "reviews": {
+      "liam": "Hosting on MyBnb has changed my life! The support and tools make managing my properties effortless.",
+      "sophia": "I’ve traveled to over 10 cities using MyBnb, and every stay has been incredible!",
+      "noah": "Renting out my vacation home was a breeze thanks to MyBnb’s seamless platform.",
+      "olivia": "The guest vetting process gives me peace of mind, and the extra income is fantastic!",
+      "ethan": "From city apartments to remote cabins, MyBnb always delivers the best stays."
+    }
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "subtitle": "Hear What Our Happy Guests & Hosts Say"
+  },
+  "theme": {
+    "dark": "Dark",
+    "light": "Light",
+    "toggle": "Toggle theme"
   }
+    
+  
     
   
 
