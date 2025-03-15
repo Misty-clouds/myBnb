@@ -1,8 +1,8 @@
 'use client'
-import { BookingDialog } from "@/components/New/form/booking-dialog";
+import { ExpensesDialog } from "@/components/New/form/dialog/expenses-dialog";
 import { useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
-import BookingPage from "@/components/New/sections/booking/page";
+import ExpensesPage from "@/components/New/sections/expenses/page";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
@@ -22,12 +22,10 @@ import {
 } from "@/components/ui/sidebar";
 
 export default function Page() {
-  const company_id = "ea65b045-4b98-4c80-be17-e21e8ffa2fea";
   const [Year, setYear] = useState<string>("2025");
+  const company_id= 'ea65b045-4b98-4c80-be17-e21e8ffa2fea';
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -74,18 +72,17 @@ export default function Page() {
             </Select>
           </div>
 
-            <BookingDialog company_id={company_id}/>
+            <ExpensesDialog company_id={company_id}/>
             </div>
 
 
           </div>
 
           <div className="w-full">
-            <BookingPage year={Year} company_id={company_id} />
+            <ExpensesPage year={Year} company_id={company_id} />
 
           </div>
         </div>
       </SidebarInset>
-    </SidebarProvider>
   );
 }

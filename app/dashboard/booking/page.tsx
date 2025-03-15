@@ -1,10 +1,9 @@
 'use client'
-import { BookingDialog } from "@/components/New/form/booking-dialog";
+import { BookingDialog } from "@/components/New/form/dialog/booking-dialog";
 import { useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import BookingPage from "@/components/New/sections/booking/page";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 
 import {
   Breadcrumb,
@@ -26,8 +25,7 @@ export default function Page() {
   const [Year, setYear] = useState<string>("2025");
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
+   
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -86,6 +84,6 @@ export default function Page() {
           </div>
         </div>
       </SidebarInset>
-    </SidebarProvider>
+  
   );
 }

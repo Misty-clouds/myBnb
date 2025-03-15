@@ -26,7 +26,7 @@ export async function GET(request: Request) {
 
     if (error) {
       console.error("Database error:", error);
-      return { error: "Failed to fetch booking records" };
+      return NextResponse.json({ error: "database  Error" }, { status: 500 });
     }
 
     // Count records by booking method

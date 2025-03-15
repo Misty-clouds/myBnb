@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient()
     const { data, error } = await supabase
-    .from("company_name")
+    .from("properties")
     .insert(body)
     .single()
 

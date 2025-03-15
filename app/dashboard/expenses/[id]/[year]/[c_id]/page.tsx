@@ -1,8 +1,8 @@
 "use client"
 import { useParams } from "next/navigation"
 import { useState, useCallback } from "react"
-import Table from "@/components/Tables/Booking_table/render"
-import { BookingDialog } from "@/components/New/form/booking-dialog"
+import ExpensesTable from "@/components/Tables/expenses_table/render"
+import { ExpensesDialog } from "@/components/New/form/dialog/expenses-dialog"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -63,8 +63,7 @@ export default function BookingYear() {
   }, [])
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
+    
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -93,15 +92,14 @@ export default function BookingYear() {
                 <span className="text-primary">{endDate}</span>
               </p>
             </div>
-            <BookingDialog company_id={String(c_id)} onBookingAdded={refreshTable} />
+            <ExpensesDialog company_id={String(c_id)} onExpenseAdded={refreshTable} />
           </div>
 
           <div className="w-full" data-table-component>
-            <Table key={refreshKey} company_id={String(c_id)} startDate={startDate} endDate={endDate} />
+            <ExpensesTable key={refreshKey} company_id={String(c_id)} startDate={startDate} endDate={endDate} />
           </div>
         </div>
       </SidebarInset>
-    </SidebarProvider>
   )
 }
 

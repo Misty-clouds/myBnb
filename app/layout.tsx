@@ -1,16 +1,12 @@
-import DeployButton from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import HeaderAuth from "@/components/SignOutButton";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
+
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import Link from "next/link";
 import "./globals.css";
 import {NextIntlClientProvider} from 'next-intl';
 import {getLocale, getMessages} from 'next-intl/server';
-
-
+import AdminProvider from "@/contexts/AdminProvider"
+import CompanyProvider from "@/contexts/CompanyProvider"
+import UserProvider from "@/contexts/UserProvider"
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
@@ -42,17 +38,27 @@ export default async function RootLayout({
        ${locale === 'ar' ? 'rtl' : 'ltr'}
       ">
       <NextIntlClientProvider messages={messages}>
-
-
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
-          <main className="min-h-screen  flex flex-col items-center">
+        
+          <UserProvider>
+          <AdminProvider>
+            <CompanyProvider>
+
+
+            <main className="min-h-screen  flex flex-col items-center">
             {children}
-          </main>
+            </main>
+
+
+            </CompanyProvider>
+          </AdminProvider>
+        </UserProvider>
+
         </ThemeProvider>
         </NextIntlClientProvider>
       </body>

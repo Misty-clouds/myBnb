@@ -1,8 +1,8 @@
 "use client"
 import { useParams } from "next/navigation"
+import { PropertiesDialog } from "@/components/New/form/dialog/properties-dialog"
 import { useState, useCallback } from "react"
-import Table from "@/components/Tables/Booking_table/render"
-import { BookingDialog } from "@/components/New/form/booking-dialog"
+import PropertiesTable from "@/components/Tables/properties_table/render"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -63,8 +63,6 @@ export default function BookingYear() {
   }, [])
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -77,7 +75,7 @@ export default function BookingYear() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Bookings</BreadcrumbPage>
+                  <BreadcrumbPage>Properties</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -86,22 +84,21 @@ export default function BookingYear() {
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="flex justify-between">
             <div className="mx-8 ">
-              <h2 className="text-3xl font-bold mb-2">Booking Records </h2>
+              <h2 className="text-3xl font-bold mb-2">Properties Records </h2>
               <p className="text-sm text-primary">
                 {" "}
                 From <span className="text-primary">{startDate}</span> to{" "}
                 <span className="text-primary">{endDate}</span>
               </p>
             </div>
-            <BookingDialog company_id={String(c_id)} onBookingAdded={refreshTable} />
+            <PropertiesDialog company_id={String(c_id)} onPropertyAdded={refreshTable} />
           </div>
 
           <div className="w-full" data-table-component>
-            <Table key={refreshKey} company_id={String(c_id)} startDate={startDate} endDate={endDate} />
+            <PropertiesTable key={refreshKey} company_id={String(c_id)} startDate={startDate} endDate={endDate} />
           </div>
         </div>
       </SidebarInset>
-    </SidebarProvider>
   )
 }
 

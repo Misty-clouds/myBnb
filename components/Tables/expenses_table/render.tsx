@@ -7,19 +7,13 @@ import type { ExpensesDetails } from "@/types"
 import { getExpensesDetails } from "@/helper-functions"
 
 export default function ExpensesTable({
-  id,
   company_id,
   startDate,
   endDate,
-  limit,
-  created_by,
 }: {
-  id: string
   company_id?: string
   startDate?: string
   endDate?: string
-  limit?: number
-  created_by?: string
 }) {
   const [data, setData] = useState<ExpensesDetails[]>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -27,12 +21,11 @@ export default function ExpensesTable({
   const [refreshCounter, setRefreshCounter] = useState<number>(0)
 
   const fetchData = useCallback(async () => {
-    if (!id) return
 
     try {
       setLoading(true)
 
-      const expenses = await getExpensesDetails(id, startDate, endDate, limit, company_id, created_by)
+      const expenses = await getExpensesDetails( startDate, endDate, company_id)
       setData(expenses)
     } catch (err) {
       setError("Failed to load expense details")
@@ -40,7 +33,7 @@ export default function ExpensesTable({
     } finally {
       setLoading(false)
     }
-  }, [id, startDate, endDate, limit, company_id, created_by])
+  }, [ startDate, endDate, company_id])
 
   // Initial data fetch
   useEffect(() => {
@@ -61,9 +54,7 @@ export default function ExpensesTable({
     }
   }, [])
 
-  if (!id) {
-    return <p>ID is required</p>
-  }
+
 
   if (loading) {
     return <p>Loading expense data...</p>

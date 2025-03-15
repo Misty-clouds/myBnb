@@ -1,32 +1,29 @@
 import { createClient } from "@/utils/supabase/server";
+import { log } from "console";
 import { NextResponse } from "next/server";
 
 
-// function to get expenses records from the database
-export async function GET(
-    _request: Request,
-    { params }: { params: { id: string } }
-  ) {
-    const { id } = await params; 
-    const supabase =await createClient(); 
-  
-    try {
-      const { data, error } = await supabase
-        .from("admin_table")
-        .select("*")
-        .eq("uid", id) 
-  
-      if (error) {
-        console.error("Failed to get admin details", error);
-        return NextResponse.json({ error: error.message }, { status: 400 });
-      }
-  
-      return NextResponse.json(data, { status: 200 });
-    } catch (error) {
-      console.error("Unexpected error:", error);
-      return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+// function to get expenses recordts from the database
+
+export async function GET(_request: Request, { params }: { params: { id: string } }) {
+  const { id } =await params
+  const supabase = await createClient()
+
+  try {
+    const { data, error } = await supabase.from("admin_table").select("*").eq("uid", id)
+
+    if (error) {
+      console.error("Failed to get admin details", error)
+      return NextResponse.json({ error: error.message }, { status: 400 })
     }
+
+    // Return the data array directly instead of nesting it
+    return NextResponse.json(data, { status: 200 })
+  } catch (error) {
+    console.error("Unexpected error:", error)
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
+}
 
 
 
@@ -79,7 +76,9 @@ try{
       console.error('failed to delete booking details')
       return NextResponse.json(error,{status:400})
   }
-return NextResponse.json(data,{status:200})
+  console.log({data});
+  
+return NextResponse.json({data},{status:200})
 }catch(error){
   console.error(error)
   return NextResponse.json(error,{status:500})

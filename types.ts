@@ -40,6 +40,8 @@ export interface CompanyDetails {
   name: string;
   logo:string;
   plan: string;
+  payment_status:string;
+  transaction_id:string;
 }
 
 export interface ExpensesDetails {
@@ -51,11 +53,13 @@ export interface ExpensesDetails {
   description?: string;
   receiptImage?: string;
   field?: string;
+  company_uid:string;
 }
 
 export interface PropertiesDetails {
   created_at: string;
   company_id: string;
+  company_uid:string;
   id: string;
   status?: string;
   image?: string | null;

@@ -7,17 +7,12 @@ import type { PropertiesDetails } from "@/types"
 import { getPropertiesDetails } from "@/helper-functions"
 
 export default function PropertiesTable({
-  id,
-  status,
-  limit,
-  company_id,
-  created_by,
+  company_id,startDate,endDate
+ 
 }: {
-  id: string
-  status?: string
-  limit?: number
-  company_id?: string
-  created_by?: string
+  company_id?: string ,
+  startDate:string,
+  endDate:string
 }) {
   const [data, setData] = useState<PropertiesDetails[]>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -25,12 +20,12 @@ export default function PropertiesTable({
   const [refreshCounter, setRefreshCounter] = useState<number>(0)
 
   const fetchData = useCallback(async () => {
-    if (!id) return
+    if (!company_id) return
 
     try {
       setLoading(true)
 
-      const properties = await getPropertiesDetails(id, status, limit, company_id, created_by)
+      const properties = await getPropertiesDetails( company_id,startDate,endDate)
       setData(properties)
     } catch (err) {
       setError("Failed to load property details")
@@ -38,7 +33,7 @@ export default function PropertiesTable({
     } finally {
       setLoading(false)
     }
-  }, [id, status, limit, company_id, created_by])
+  }, [ company_id ])
 
   // Initial data fetch
   useEffect(() => {
@@ -59,7 +54,7 @@ export default function PropertiesTable({
     }
   }, [])
 
-  if (!id) {
+  if (!company_id) {
     return <p>ID is required</p>
   }
 

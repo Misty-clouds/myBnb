@@ -1,28 +1,33 @@
-// app/api/expenses/[id]/route.js
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
 
 // function to get expenses records from the database
 export async function GET(
-    _request:Request,
+    request:Request,
     {params}:{params:Promise<{id : string}>}
 ){
-const id =await params;
+const {id} =await params;
+const { searchParams } = new URL(request.url);
+const startDate = searchParams.get("startDate");
+const endDate = searchParams.get("endDate");
 const supabase = await createClient();
 
 try{
     const {data,error} = await supabase.
     from('properties')
     .select('*')
-    .eq('id',id)
-    .single()
+    .eq('company_uid',id)
+    .gte("created_at", startDate)
+    .lte("created_at", endDate)
 
     if (error){
         console.error('failed to get properties details')
         return NextResponse.json(error,{status:400})
     }
+    
 return NextResponse.json(data,{status:200})
+
 }catch(error){
     console.error(error)
     return NextResponse.json(error,{status:500})

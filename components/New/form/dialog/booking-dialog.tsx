@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import { Calendar, Upload, Check, AlertCircle, Image } from "lucide-react"
 import { format, differenceInDays } from "date-fns"
 import { useToast } from "@/hooks/use-toast"
-import { uploadFile, getOptimizedImageUrl } from "./uploadFile"
+import { uploadFile, getOptimizedImageUrl } from "../uploadFile"
 import { insertBookingDetails } from "@/helper-functions"
 import type { BookingDetails } from "@/types"
 

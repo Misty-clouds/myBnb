@@ -15,7 +15,7 @@ try{
     const {data,error} = await supabase.
     from('company_name')
     .select('*')
-    .eq('id',id)
+    .eq('uid',id)
     .single()
 
     if (error){

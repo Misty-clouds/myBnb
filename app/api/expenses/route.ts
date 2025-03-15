@@ -7,7 +7,7 @@ import { NextResponse,NextRequest } from "next/server"
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    console.log("Incoming Booking Data:", body)
+    console.log("Incoming Expenses Data:", body)
 
     const supabase = await createClient()
     const { data, error } = await supabase

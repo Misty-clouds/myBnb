@@ -10,23 +10,17 @@ export async function GET(
 
   const startDate = searchParams.get("startDate");
   const endDate = searchParams.get("endDate");
-  const limit = searchParams.get("limit");
-  const company_id = searchParams.get("company_id");
-  const created_by = searchParams.get("created_by");
 
   const supabase = await createClient();
 
   try {
-    let query = supabase.from("expenses").select("*").eq("id", id);
+    let query = supabase.from("expenses").select("*").eq("company_uid", id);
 
     if (startDate && endDate) {
       query = query.gte("date", startDate).lte("date", endDate);
     }
 
-    if (company_id) query = query.eq("company_id", company_id);
-    if (created_by) query = query.eq("created_by", created_by);
-    if (limit) query = query.limit(parseInt(limit));
-
+   
     const { data, error } = await query;
 
     if (error) {

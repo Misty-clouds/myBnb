@@ -1,8 +1,8 @@
 'use client'
-import { BookingDialog } from "@/components/New/form/booking-dialog";
+import { PropertiesDialog } from "@/components/New/form/dialog/properties-dialog";
 import { useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
-import BookingPage from "@/components/New/sections/booking/page";
+import PropertiesPage from "@/components/New/sections/properties/page";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
@@ -26,8 +26,6 @@ export default function Page() {
   const [Year, setYear] = useState<string>("2025");
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -36,7 +34,7 @@ export default function Page() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">Booking Overview</BreadcrumbLink>
+                  <BreadcrumbLink href="#">Properties Overview</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
@@ -50,7 +48,7 @@ export default function Page() {
         <div className="flex flex-col gap-4 p-4 pt-0">
         <div className="flex flex-col sm:flex-row justify-between w-full px-2 sm:px-4 md:px-8 gap-2">
 
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">Bookings</h2>
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">Properties</h2>
         <div className="flex gap-2 sm:gap-4 flex-row">
 
           {/* Year Selection Dropdown */}
@@ -74,18 +72,17 @@ export default function Page() {
             </Select>
           </div>
 
-            <BookingDialog company_id={company_id}/>
+            <PropertiesDialog company_id={company_id}/>
             </div>
 
 
           </div>
 
           <div className="w-full">
-            <BookingPage year={Year} company_id={company_id} />
+            <PropertiesPage year={Year} company_id={company_id} />
 
           </div>
         </div>
       </SidebarInset>
-    </SidebarProvider>
   );
 }
