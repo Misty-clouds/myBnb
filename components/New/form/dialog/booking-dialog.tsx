@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useUser } from "@/helper-functions"
+import { useUserContext } from "@/contexts/UserProvider"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 interface BookingDialogProps {
@@ -44,11 +44,7 @@ export function BookingDialog({ company_id, onBookingAdded }: BookingDialogProps
     status: "idle" | "uploading" | "success" | "error"
     message: string
   }>({ status: "idle", message: "" })
-
-  const user = useUser()
-  const userId = user.id
-  const userEmail = user?.email
-
+  const {userId,userEmail}=useUserContext();
   const { toast } = useToast()
 
   // Calculate number of days when dates change

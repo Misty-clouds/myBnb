@@ -5,7 +5,7 @@ import { useState } from "react"
 import { Upload, Check, AlertCircle, Image, Building, Users, CreditCard, Phone } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { uploadFile } from "../uploadFile"
-import { updateCompanyPaymentStatus } from "@/helper-functions"
+import { updateAdminDetails, updateCompanyPaymentStatus } from "@/helper-functions"
 import type { CompanyDetails } from "@/types"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
@@ -13,9 +13,13 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useUser, insertCompanyDetails } from "@/helper-functions"
+import {  insertCompanyDetails } from "@/helper-functions"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useRouter } from "next/navigation"
+import { useUserContext } from "@/contexts/UserProvider"
+import { useCompanyContext } from "@/contexts/CompanyProvider"
+import { useAdminContext } from "@/contexts/AdminProvider"
+import { set } from "date-fns"
 
 interface CompanyDialogProps {
   open?: boolean
@@ -24,7 +28,6 @@ interface CompanyDialogProps {
 
 }
 
-// Plan pricing
 const PLAN_PRICES = {
   basic: 30,
   premium: 50,
@@ -37,6 +40,10 @@ export function CompanyDialog({
   onCompanyAdded,
 }: CompanyDialogProps) {
   const router = useRouter()
+  const {admin}=useAdminContext();
+  const companyUids= admin[0].company_uid
+  const [newCompanyUid,setNewCompanyUid]=useState<string>('')
+  const [newCompanyUids, setNewCompanyUids] = useState<string[]>([]);
   const [internalOpen, setInternalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [name, setName] = useState("")
@@ -53,18 +60,34 @@ export function CompanyDialog({
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
-  const [countryCode, setCountryCode] = useState("965") // Default Kuwait
+  const [countryCode, setCountryCode] = useState("965") 
 
   // Use external open state if provided, otherwise use internal state
   const open = externalOpen !== undefined ? externalOpen : internalOpen
   const setOpen = externalOnOpenChange || setInternalOpen
 
-  const user = useUser()
-  const userId = user?.id
-  const userEmail = user?.email
-
+ const  {userId,userEmail}=useUserContext()
   const { toast } = useToast()
 
+  const supabaseUid =()=>{
+    return crypto.randomUUID();
+
+    }
+
+    const addNewCompanyUid = () => {
+      const id = supabaseUid();
+      setNewCompanyUid(id);
+      return id;
+    };
+  
+    const addNewCompanyUids = (newCompanyUid:string) => {
+      if (companyUids) {
+        setNewCompanyUids([...companyUids, newCompanyUid]);
+      } else {
+        setNewCompanyUids([newCompanyUid]);
+      }
+    };
+    
   // Handle logo image preview
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -155,7 +178,7 @@ export function CompanyDialog({
           id: "src_all",
         },
         redirect: {
-          url: `${window.location.origin}/payment/callback?company_id=${companyDetails.id || ""}`,
+          url: `${window.location.origin}/api/payment/verify?company_id=${newCompanyUid || ""}`,
         },
       }
 
@@ -182,6 +205,7 @@ export function CompanyDialog({
           plan: plan,
           amount: PLAN_PRICES[plan as keyof typeof PLAN_PRICES],
           transactionRef,
+          
         }),
       )
 
@@ -205,7 +229,7 @@ export function CompanyDialog({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
+   console.log(companyUids)
     // Validate required fields
     if (!name) {
       toast({
@@ -234,6 +258,12 @@ export function CompanyDialog({
       })
       return
     }
+    const newUid = supabaseUid();
+    setNewCompanyUid(newUid);
+    const currentCompanyUids = admin && admin[0] && admin[0].company_uid ? admin[0].company_uid : [];
+
+    const updatedCompanyUids = Array.isArray(currentCompanyUids) ? 
+    [...currentCompanyUids, newUid] : [newUid];    setNewCompanyUids(updatedCompanyUids);
 
     setIsSubmitting(true)
 
@@ -273,6 +303,8 @@ export function CompanyDialog({
         }
       }
 
+     
+
       // Parse managers emails into an array
       const managersEmailArray = managersEmail
         .split(",")
@@ -287,20 +319,22 @@ export function CompanyDialog({
         isSubscribed: true,
         plan,
         logo: logoUrl || "",
-        payment_status: "pending", // Add payment status
+        payment_status: "pending",
+        uid:newUid,
       }
 
       // First save the company details
       const savedCompany = await insertCompanyDetails(companyDetails)
+      const updateAdmin=await updateAdminDetails(userId as string,{company_uid:updatedCompanyUids})
 
       // Now process the payment
       const paymentSuccess = await processPayment({
         ...companyDetails,
-        id: savedCompany?.id, // Include the company ID if available
+        uid: savedCompany?.uid, // Include the company ID if available
       })
 
       if (!paymentSuccess) {
-        // If payment failed but company was created, you might want to update its status
+        // If payment failed but company was created,
         // or handle this case appropriately
         toast({
           title: "Warning",

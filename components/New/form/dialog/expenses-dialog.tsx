@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { useUser } from "@/helper-functions"
+import { useUserContext } from "@/contexts/UserProvider"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 interface ExpensesDialogProps {
@@ -25,6 +25,7 @@ interface ExpensesDialogProps {
 }
 
 export function ExpensesDialog({ company_id, onExpenseAdded }: ExpensesDialogProps) {
+  const {userEmail,userId}=useUserContext()
   const [open, setOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [amount, setAmount] = useState<number>(0)
@@ -37,9 +38,6 @@ export function ExpensesDialog({ company_id, onExpenseAdded }: ExpensesDialogPro
     message: string
   }>({ status: "idle", message: "" })
 
-  const user = useUser()
-  const userId = user?.id
-  const userEmail = user?.email
 
   const { toast } = useToast()
 

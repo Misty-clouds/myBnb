@@ -19,10 +19,11 @@ import { insertBookingDetails } from '@/helper-functions';
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { BookingDetails } from '@/types';
-import { useUser } from '@/helper-functions';
 import { uploadFile } from './uploadFile';
+import { useUserContext } from '@/contexts/UserProvider';
 
 const BOOKING_METHODS = ["Online", "In-Person", "Phone"];
+const {userId,userEmail}=useUserContext()
 
 export default function BookingForm({company_uid}:{company_uid:string}) {
   const [formMessage, setFormMessage] = useState<MessageType>(null);
@@ -41,8 +42,7 @@ export default function BookingForm({company_uid}:{company_uid:string}) {
     bookingMethod: '',
   });
 
-  const user=useUser()  
-  console.log(user)
+  console.log(userId)
   // Calculate number of days and total amount whenever dates or daily amount changes
   useEffect(() => {
     if (dateRange.from && dateRange.to && bookingDetails.dailyAmount) {
@@ -108,12 +108,12 @@ export default function BookingForm({company_uid}:{company_uid:string}) {
 
     try {
       // Get current user
-      const email=user?.email;
+      const email=userEmail;
       let receiptImageUrl = '';
 
       // Upload receipt file if selected
       if (selectedReceiptFile) {
-        receiptImageUrl = await uploadFile(selectedReceiptFile, user.id);
+        receiptImageUrl = await uploadFile(selectedReceiptFile, userEmail as string);
         if (!receiptImageUrl) {
           throw new Error("Failed to upload receipt file.");
         }

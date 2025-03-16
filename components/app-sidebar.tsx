@@ -8,24 +8,21 @@ import { NavSingle } from "@/components/nav-single"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar"
-import { useUserContext } from "@/contexts/UserProvider"
 import { useCompanyContext } from "@/contexts/CompanyProvider"
 import { useAdminContext } from "@/contexts/AdminProvider"
+import { useUserContext } from "@/contexts/UserProvider"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const baseNavLink = "/dashboard"
   const pathname = usePathname()
-
-  // Use the user context instead of useUser hook
-  const { user } = useUserContext()
-  const email = user?.email
+  const {userEmail} = useUserContext()
 
   // Get data from contexts instead of fetching it here
   const { admin } = useAdminContext()
   const { companies, activeCompany } = useCompanyContext()
 
   const teams = companies.map((company) => ({
-    id: company.id, 
+    uid: company.uid,
     name: company.name,
     logo: company.logo,
     plan: company.plan,
@@ -38,8 +35,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const userData = {
     user: {
-      name: user?.name || (email ? email.split("@")[0] : "User"),
-      email: email || "",
+      name: userEmail ? userEmail.split("@")[0] : "User",
+      email: userEmail || "",
       avatar: admin[0]?.photo_url || "/avatars/shadcn.jpg",
     },
     teams: teams,

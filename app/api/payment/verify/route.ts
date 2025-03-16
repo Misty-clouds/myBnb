@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
 
     // Return the payment status and details
     return NextResponse.json({
-      id: data.id,
+      uid: data.uid,
       status: data.status,
       amount: data.amount,
       currency: data.currency,

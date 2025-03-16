@@ -14,8 +14,8 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useUser } from "@/helper-functions"
 import { insertPropertiesDetails } from "@/helper-functions"
+import { useUserContext } from "@/contexts/UserProvider"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 interface PropertiesDialogProps {
@@ -36,9 +36,8 @@ export function PropertiesDialog({ company_id, onPropertyAdded }: PropertiesDial
     message: string
   }>({ status: "idle", message: "" })
 
-  const user = useUser()
-  const userId = user?.id
-  const userEmail = user?.email
+  const {userEmail,userId}=useUserContext()
+  
 
   const { toast } = useToast()
 

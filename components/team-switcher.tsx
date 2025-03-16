@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import { ChevronsUpDown, Plus } from "lucide-react"
+import { CompanyDialog } from "./New/form/dialog/company-dialog"
 import { useCompanyContext } from "@/contexts/CompanyProvider"
-import { useUserContext } from "@/contexts/UserProvider"
 
 import {
   DropdownMenu,
@@ -17,13 +17,12 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar"
 import Image from "next/image"
 import Logo from "@/images/logo"
-import { CompanyDialogAdapter } from "./company-dialog-adapter"
 
 export function TeamSwitcher({
   teams,
 }: {
   teams: {
-    id: number
+    uid: string
     name: string
     logo: string
     plan: string
@@ -32,37 +31,31 @@ export function TeamSwitcher({
   const { isMobile } = useSidebar()
   const [isCompanyDialogOpen, setIsCompanyDialogOpen] = React.useState(false)
 
-  // Use user context
-  const { user } = useUserContext()
-
   // Use company context to manage active company
   const { activeCompany, setActiveCompany, setCurrentCompanyId } = useCompanyContext()
 
-  // Set initial active company if not already set - with a ref to prevent infinite updates
-  const initialSetupDone = React.useRef(false)
-
+  // Set initial active company if not already set
   React.useEffect(() => {
-    if (!activeCompany && teams.length > 0 && !initialSetupDone.current) {
-      initialSetupDone.current = true
+    if (!activeCompany && teams.length > 0) {
       const firstCompany = teams[0]
       setActiveCompany({
-        id: firstCompany.id,
+        uid: firstCompany.uid,
         name: firstCompany.name,
         logo: firstCompany.logo,
         plan: firstCompany.plan,
       })
-      setCurrentCompanyId(firstCompany.id)
+      setCurrentCompanyId(firstCompany.uid)
     }
   }, [teams, activeCompany, setActiveCompany, setCurrentCompanyId])
 
   const handleCompanySelect = (team: (typeof teams)[0]) => {
     setActiveCompany({
-      id: team.id,
+      uid: team.uid,
       name: team.name,
       logo: team.logo,
       plan: team.plan,
     })
-    setCurrentCompanyId(team.id)
+    setCurrentCompanyId(team.uid)
   }
 
   const handleAddCompany = () => {
@@ -99,12 +92,10 @@ export function TeamSwitcher({
               side={isMobile ? "bottom" : "right"}
               sideOffset={4}
             >
-              <DropdownMenuLabel className="text-xs text-muted-foreground">
-                {user?.name || user?.email?.split("@")[0]}'s Companies
-              </DropdownMenuLabel>
+              <DropdownMenuLabel className="text-xs text-muted-foreground">My Companies</DropdownMenuLabel>
               {teams.map((team, index) => (
                 <DropdownMenuItem
-                  key={team.id || team.name}
+                  key={team.uid || team.name}
                   onClick={() => handleCompanySelect(team)}
                   className="gap-2 p-2"
                 >
@@ -131,17 +122,39 @@ export function TeamSwitcher({
         </SidebarMenuItem>
       </SidebarMenu>
 
-      <CompanyDialogAdapter
-        open={isCompanyDialogOpen}
+      <CompanyDialogWrapper
+        isOpen={isCompanyDialogOpen}
         onOpenChange={setIsCompanyDialogOpen}
         onCompanyAdded={(newCompany) => {
           if (newCompany) {
             setActiveCompany(newCompany)
-            setCurrentCompanyId(newCompany.id)
+            setCurrentCompanyId(newCompany.uid)
           }
         }}
       />
     </>
+  )
+}
+
+function CompanyDialogWrapper({
+  isOpen,
+  onOpenChange,
+  onCompanyAdded,
+}: {
+  isOpen: boolean
+  onOpenChange: (open: boolean) => void
+  onCompanyAdded?: (newCompany: any) => void
+}) {
+  return (
+    <CompanyDialog
+      open={isOpen}
+      onOpenChange={onOpenChange}
+      onCompanyAdded={(newCompany) => {
+        if (onCompanyAdded && newCompany) {
+          onCompanyAdded(newCompany)
+        }
+      }}
+    />
   )
 }
 

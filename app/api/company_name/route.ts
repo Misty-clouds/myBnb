@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
       throw error
     }
 
-    console.log("Inserted company_name:", data)
+    console.log("Inserted company_name:", {data})
     return NextResponse.json(data, { status: 201 })
   } catch (error) {
     console.error("Catch Block Error:", error)

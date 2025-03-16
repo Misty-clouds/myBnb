@@ -6,7 +6,7 @@ import { createContext, type ReactNode, useContext, useState, useEffect, useCall
 
 // Define Company interface to match CompanyDetails from your API
 interface Company {
-  id: number
+  uid:string
   name: string
   logo: string
   plan: string
@@ -16,7 +16,7 @@ interface Company {
 // Define the structure of the context state
 interface ICompanyContextState {
   companies: Company[]
-  currentCompanyId: number | null
+  currentCompanyId: string | null
   activeCompany: Company | null
   isLoading: boolean
   error: string | null
@@ -25,7 +25,7 @@ interface ICompanyContextState {
 // Define the context interface
 interface ICompanyContext extends ICompanyContextState {
   setCompanyState: ({ key, value }: { key: keyof ICompanyContextState; value: any }) => void
-  setCurrentCompanyId: (id: number | null) => void
+  setCurrentCompanyId: (uid: string | null) => void
   setCompanies: (companies: Company[]) => void
   setActiveCompany: (company: Company | null) => void
 }
@@ -72,8 +72,8 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   // Helper function to set current company ID
-  const setCurrentCompanyId = useCallback((id: number | null) => {
-    setState((prev) => ({ ...prev, currentCompanyId: id }))
+  const setCurrentCompanyId = useCallback((uid: string | null) => {
+    setState((prev) => ({ ...prev, currentCompanyId: uid }))
   }, [])
 
   // Helper function to set companies

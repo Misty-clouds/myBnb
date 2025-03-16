@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import StatsCardGroup from "./group_stats";
 import { useTranslations } from "next-intl";
-import { useUser } from "@/helper-functions"; 
+import { useUserContext } from "@/contexts/UserProvider"
 import { getBookingStats } from "@/helper-functions"; // Import the helper function
 import { GetBookingStats } from "@/types"; // Ensure you have the correct type
 import { Card,CardContent } from "@/components/ui/card";
 export default function StatsGroupDashboardData({company_id,startDate,endDate}: {company_id: string,startDate:string,endDate:string}) {
   const t = useTranslations("Dashboard");
-  const id = useUser().id; 
+  const {userEmail,userId}=useUserContext()
 
   // State to store fetched stats
   const [stats, setStats] = useState<GetBookingStats | null>(null);
@@ -20,6 +20,7 @@ export default function StatsGroupDashboardData({company_id,startDate,endDate}: 
     const fetchStats = async () => {
       try {
         setLoading(true);
+        if(startDate===""||endDate==="")return;
         const data = await getBookingStats(company_id,startDate, endDate);
         setStats(data);
       } catch (err) {
@@ -37,7 +38,6 @@ export default function StatsGroupDashboardData({company_id,startDate,endDate}: 
   if (loading) return <div className="w-full align-middle m-4 h-40 justify-center text-center ">
     <Card className="m-auto aspect-video rounded-xl  w-full h-full">
       <CardContent className="m-auto">
-        <p>Loading.....</p>
       </CardContent>
     </Card>
   </div>;

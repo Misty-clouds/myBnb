@@ -1,14 +1,13 @@
 "use client"
 
 import type React from "react"
-import { useUser } from "@/helper-functions"
 import { useEffect } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
 import { getAdminDetails, getCompanyDetails } from "@/helper-functions"
 import { useCompanyContext } from "@/contexts/CompanyProvider"
 import { useAdminContext } from "@/contexts/AdminProvider"
-import { useUserContext } from "@/contexts/UserProvider"
 import { SidebarProvider } from "@/components/ui/sidebar"
+import { useUserContext } from "@/contexts/UserProvider"
 
 export default function DashboardLayout({
   children,
@@ -16,10 +15,8 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
 
-//   const { user, isAuthenticated, isLoading } = useUserContext()
-const user =useUser();
-  const userId = user?.id
-  const userEmail = user?.email
+const { userId } = useUserContext()
+
 
   const { setAdminState, admin } = useAdminContext()
   const { setCompanyState, setCurrentCompanyId, setCompanies, setActiveCompany } = useCompanyContext()
@@ -66,7 +63,7 @@ const user =useUser();
         // Set the first company as active if we have companies and no active company
         if (companyData.length > 0) {
           setActiveCompany(companyData[0])
-          setCurrentCompanyId(companyData[0].id) // Now expecting a number
+          setCurrentCompanyId(companyData[0].uid) 
         }
       } catch (error) {
         console.error("Error fetching company details:", error)
@@ -84,10 +81,8 @@ const user =useUser();
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen">
         <AppSidebar />
         {children}
-      </div>
     </SidebarProvider>
   )
 }
