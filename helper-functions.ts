@@ -83,7 +83,7 @@ export async function deleteAdminDetails(id: string): Promise<void> {
 }
 
 export async function insertAdminDetails(
-  details: AdminDetails
+  details: Partial<AdminDetails>
 ): Promise<AdminDetails> {
   const response = await fetch(`/api/admin`, {
     method: "POST",

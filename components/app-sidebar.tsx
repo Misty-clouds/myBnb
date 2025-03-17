@@ -15,9 +15,8 @@ import { useUserContext } from "@/contexts/UserProvider"
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const baseNavLink = "/dashboard"
   const pathname = usePathname()
-  const {userEmail} = useUserContext()
+  const { userEmail } = useUserContext()
 
-  // Get data from contexts instead of fetching it here
   const { admin } = useAdminContext()
   const { companies, activeCompany } = useCompanyContext()
 
@@ -30,6 +29,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const isActive = (href: string): boolean => {
     if (!href) return false
+
+    if (href === baseNavLink) {
+      return pathname === href
+    }
+
+    const pathnameSegments = pathname.split("/").filter(Boolean)
+    const hrefSegments = href.split("/").filter(Boolean)
+
+    if (pathnameSegments.length > 1 && hrefSegments.length > 1) {
+      return pathname.startsWith(href)
+    }
+
     return pathname === href
   }
 
@@ -95,4 +106,3 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   )
 }
-

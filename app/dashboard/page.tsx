@@ -30,9 +30,11 @@ import {
 import CompanyVisitorsDashboard from "@/components/analytics/customer-chart";
 import RevenueChart from "@/components/analytics/revenue-chart";
 import Table from "@/components/Tables/Booking_table/render";
+import { useCompanyContext } from "@/contexts/CompanyProvider";
 
 export default function Page() {
-  const company_id = "ea65b045-4b98-4c80-be17-e21e8ffa2fea";
+  const {activeCompany}= useCompanyContext();
+  const company_id = activeCompany?.uid||"ea65b045-4b98-4c80-be17-e21e8ffa2fea";
   const [year, setYear] = useState<string>("2025");
   const [month, setMonth] = useState<string>("all");
   const [startDate, setStartDate] = useState<string>("");

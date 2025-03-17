@@ -20,9 +20,11 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { useCompanyContext } from "@/contexts/CompanyProvider";
 
 export default function Page() {
-  const company_id = "ea65b045-4b98-4c80-be17-e21e8ffa2fea";
+  const {activeCompany}= useCompanyContext();
+  const company_id = activeCompany?.uid||"ea65b045-4b98-4c80-be17-e21e8ffa2fea";
   const [Year, setYear] = useState<string>("2025");
 
   return (

@@ -9,6 +9,7 @@ export interface AdminDetails {
   email: string;
   company_uid: string[]|null; 
   photo_url: string|null;
+  uid:string;
 };
 
 export interface BookingDetails {

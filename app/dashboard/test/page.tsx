@@ -5,7 +5,6 @@ export default function testPage(){
     return(
         <div>
             <h1>Test Page</h1>
-            <Table company_id={company_id} />
         </div>
     )
 }

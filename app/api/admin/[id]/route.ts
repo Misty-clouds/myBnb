@@ -5,7 +5,9 @@ import { NextResponse } from "next/server";
 
 // function to get expenses recordts from the database
 
-export async function GET(_request: Request, { params }: { params: { id: string } }) {
+export async function GET(_request: Request, 
+  {params}:{params:Promise<{id : string}>}
+) {
   const { id } =await params
   const supabase = await createClient()
 

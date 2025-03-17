@@ -8,40 +8,66 @@ import { useCompanyContext } from "@/contexts/CompanyProvider"
 import { useAdminContext } from "@/contexts/AdminProvider"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { useUserContext } from "@/contexts/UserProvider"
+import { createClient } from "@/utils/supabase/client"
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-
-const { userId } = useUserContext()
-
-
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const { userId, userEmail } = useUserContext()
   const { setAdminState, admin } = useAdminContext()
-  const { setCompanyState, setCurrentCompanyId, setCompanies, setActiveCompany } = useCompanyContext()
+  const { setCompanies, setCurrentCompanyId, setActiveCompany } = useCompanyContext()
 
-  // Fetch admin details
   useEffect(() => {
-    const fetchAdminDetails = async () => {
-      if (!userId) return
+    const fetchAndInsertAdminDetails = async () => {
+      if (!userId || !userEmail) return
 
       try {
-        const result = await getAdminDetails(String(userId))
-        if (result) {
-          console.log("Admin details fetched:", result)
-          setAdminState({ key: "admin", value: result })
+        const supabase = createClient()
+        
+        // Check if admin already exists in admin_table
+        const { data, error } = await supabase
+          .from("admin_table")
+          .select("*")
+          .eq("uid", userId)
+
+        if (error) {
+          console.error("Error fetching admin details:", error.message)
+          return
         }
-      } catch (error) {
-        console.error("Error fetching admin details:", error)
+
+        // Check if data is valid and contains at least one entry
+        if (Array.isArray(data) && data.length > 0) {
+          console.log("Admin details found:", data)
+          setAdminState({ key: "admin", value: data }) // Update state
+        } else {
+          console.log("No admin details found. Inserting new admin...")
+
+          // Insert new admin
+          const { error: insertError } = await supabase
+            .from("admin_table")
+            .insert([
+              {
+                email: userEmail,
+                uid: userId,
+              },
+            ])
+
+          if (insertError) {
+            console.error("Error inserting admin details:", insertError.message)
+          } else {
+            console.log("Admin details inserted successfully.")
+            // Fetch again to update state
+            const newAdminData = await getAdminDetails(String(userId))
+            setAdminState({ key: "admin", value: newAdminData })
+          }
+        }
+      } catch (err) {
+        console.error("Unexpected error fetching admin details:", err)
       }
     }
 
-      fetchAdminDetails()
-    
-  }, [userId])
+    fetchAndInsertAdminDetails()
+  }, [userId, userEmail])
 
-  // Fetch company details once we have admin data
+  // Fetch company details once admin data is available
   useEffect(() => {
     const fetchCompanyDetails = async () => {
       if (!admin?.[0]?.company_uid?.length) return
@@ -50,17 +76,13 @@ const { userId } = useUserContext()
 
       try {
         const companyData = await Promise.all(
-          companyUids.map(async (companyId: string) => {
-            return await getCompanyDetails(companyId)
-          }),
+          companyUids.map(async (companyId: string) => await getCompanyDetails(companyId))
         )
 
         console.log("Companies fetched:", companyData)
-
-        // Now companyData should match the Company interface
         setCompanies(companyData)
 
-        // Set the first company as active if we have companies and no active company
+        // Set first company as active
         if (companyData.length > 0) {
           setActiveCompany(companyData[0])
           setCurrentCompanyId(companyData[0].uid) 
@@ -75,15 +97,10 @@ const { userId } = useUserContext()
     }
   }, [admin])
 
- 
-
-  
-
   return (
     <SidebarProvider>
-        <AppSidebar />
-        {children}
+      <AppSidebar />
+      {children}
     </SidebarProvider>
   )
 }
-
