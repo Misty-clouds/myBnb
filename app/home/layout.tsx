@@ -88,9 +88,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <SidebarProvider>
-{ locale==='en'&& <AppSidebar />}        
+ <AppSidebar />
 <main className="flex-1 p-4">{children}</main>
-{ locale==='ar'&& <AppSidebar />}        
 
     </SidebarProvider>
   );
