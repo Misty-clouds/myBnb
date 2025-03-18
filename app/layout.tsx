@@ -37,7 +37,6 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-            {/* Ensure UserProvider only runs on the client */}
             <UserProvider>
               <AdminProvider>
                 <CompanyProvider>

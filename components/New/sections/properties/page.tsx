@@ -7,7 +7,7 @@ export default function PropertiesPage({year,company_id}:{year:string,company_id
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
       <div className="grid auto-rows-min gap-4 px-5 md:grid-cols-4">
       {Months.map((monthData) => (
-      <Link key={monthData.id} href={`/dashboard/properties/${monthData.id}/${year}/${company_id}`}>
+      <Link key={monthData.id} href={`/home/properties/${monthData.id}/${year}/${company_id}`}>
         <Card className="rounded-lg border bg-card text-card-foreground shadow-sm border-secondary transition-all duration-200 hover:transform hover:scale-105">
           <CardHeader>
             <CardTitle>{monthData.month}</CardTitle>

@@ -30,7 +30,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const isActive = (href: string): boolean => {
     if (!href) return false
 
-    if (href === baseNavLink) {
+    if (href === baseNavLink  ||baseNavLink+"/settings")  {
       return pathname === href
     }
 
@@ -43,6 +43,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     return pathname === href
   }
+
+
 
   const userData = {
     user: {
@@ -86,6 +88,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         name: "Settings",
         url: baseNavLink + "/settings",
         icon: Settings2,
+        isActive:isActive(baseNavLink+"/settings")
       },
     ],
   }
