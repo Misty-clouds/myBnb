@@ -74,14 +74,14 @@ export function TeamSwitcher({
               >
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-card text-sidebar-primary-foreground">
                   {activeCompany && activeCompany.logo ? (
-                    <Image src={activeCompany.logo || "/placeholder.svg"} alt="avatar" width={30} height={30} />
+                    <Image src={activeCompany.logo } alt="avatar" width={30} height={30} />
                   ) : (
                     <Logo width={30} height={30} />
                   )}
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{activeCompany ? activeCompany.name : "MyBnB"}</span>
-                  <span className="truncate text-xs">{activeCompany ? activeCompany.plan : "Entry"}</span>
+                  <span className="truncate text-xs">{activeCompany ? activeCompany.plan : "Test"}</span>
                 </div>
                 <ChevronsUpDown className="ml-auto" />
               </SidebarMenuButton>

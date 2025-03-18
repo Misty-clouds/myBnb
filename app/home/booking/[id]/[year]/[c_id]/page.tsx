@@ -15,7 +15,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { AppSidebar } from "@/components/app-sidebar"
 import { Separator } from "@/components/ui/separator"
 
-export function formatId(id: number) {
+function formatId(id: number) {
   return id < 10 ? `0${id}` : `${id}`
 }
 

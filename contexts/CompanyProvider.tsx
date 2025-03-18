@@ -4,16 +4,13 @@ import React from "react"
 
 import { createContext, type ReactNode, useContext, useState, useEffect, useCallback } from "react"
 
-// Define Company interface to match CompanyDetails from your API
 interface Company {
   uid:string
   name: string
   logo: string
   plan: string
-  // Add any other company properties you need
 }
 
-// Define the structure of the context state
 interface ICompanyContextState {
   companies: Company[]
   currentCompanyId: string | null
@@ -22,7 +19,6 @@ interface ICompanyContextState {
   error: string | null
 }
 
-// Define the context interface
 interface ICompanyContext extends ICompanyContextState {
   setCompanyState: ({ key, value }: { key: keyof ICompanyContextState; value: any }) => void
   setCurrentCompanyId: (uid: string | null) => void
@@ -30,7 +26,6 @@ interface ICompanyContext extends ICompanyContextState {
   setActiveCompany: (company: Company | null) => void
 }
 
-// Create the context
 const CompanyContext = createContext<ICompanyContext | null>(null)
 
 // Custom hook for consuming the context
@@ -66,34 +61,28 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
     return initialState
   })
 
-  // Function to update state - use useCallback to prevent recreation on each render
   const setCompanyState = useCallback(({ key, value }: { key: keyof ICompanyContextState; value: any }) => {
     setState((prev) => ({ ...prev, [key]: value }))
   }, [])
 
-  // Helper function to set current company ID
   const setCurrentCompanyId = useCallback((uid: string | null) => {
     setState((prev) => ({ ...prev, currentCompanyId: uid }))
   }, [])
 
-  // Helper function to set companies
   const setCompanies = useCallback((companies: Company[]) => {
     setState((prev) => ({ ...prev, companies }))
   }, [])
 
-  // Helper function to set active company
   const setActiveCompany = useCallback((company: Company | null) => {
     setState((prev) => ({ ...prev, activeCompany: company }))
   }, [])
 
-  // Persist state to localStorage when it changes
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("companyState", JSON.stringify(state))
     }
   }, [state])
 
-  // Memoize the context value to prevent unnecessary re-renders
   const contextValue = React.useMemo(
     () => ({
       ...state,
