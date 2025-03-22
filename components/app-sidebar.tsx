@@ -13,7 +13,7 @@ import { useAdminContext } from "@/contexts/AdminProvider"
 import { useUserContext } from "@/contexts/UserProvider"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const baseNavLink = "/home"
+  const baseNavLink = "/dashboard"
   const pathname = usePathname()
   const { userEmail } = useUserContext()
 
