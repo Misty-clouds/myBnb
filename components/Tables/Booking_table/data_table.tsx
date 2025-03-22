@@ -53,10 +53,10 @@ export function DataTableWithVisibility<TData, TValue>({ columns, data }: DataTa
     propertyName: true,
     created_by: true,
     actions: true,
-    dailyAmount: false,
+    dailyAmount: true,
     receiptImage: false,
-    entryDate: false,
-    exitDate: false,
+    entryDate: true,
+    exitDate: true,
   });
 
   const table = useReactTable({
