@@ -4,8 +4,6 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from 'next-intl';
 import { LayoutDashboard, BarChart, Calendar, DollarSign, Settings, LogOut, LucideIcon } from "lucide-react";
 import { signOutAction } from '@/app/actions';
-import LocaleSwitcher from '../locale/LocaleSwitcher';
-
 interface NavItem {
   href?: string;
   icon: LucideIcon;
@@ -99,7 +97,6 @@ export function SidebarNav(): JSX.Element {
       </nav>
 
       <div className="mt-auto flex flex-col gap-2">
-        <LocaleSwitcher/>
         {bottomNavItems.map((item) => (
           <NavLink key={item.label} {...item} />
         ))}
