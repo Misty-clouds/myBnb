@@ -1,6 +1,5 @@
 'use client'
 import { useTranslations } from 'next-intl'
-import LocaleSwitcher from './locale/LocaleSwitcher'
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -51,7 +50,6 @@ export default function HeroSection() {
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <div className="flex items-center gap-x-6">
-              <LocaleSwitcher />
               <Link 
                 href="/sign-in" 
                 className="text-sm/6 font-semibold text-gray-900 transition duration-300 ease-in-out hover:text-orange-600 group flex items-center"
